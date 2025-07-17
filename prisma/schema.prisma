@@ -1,0 +1,110 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  id                 Int               @id @default(autoincrement())
+  type               String?           // e.g. simple, variable
+  sku                String?
+  barcode            String?
+  name               String
+  published          Boolean           @default(false)
+  isFeatured         Boolean           @default(false)
+  isBestSelling      Boolean           @default(false)
+  visibility         String?
+  shortDescription   String?
+  description        String?
+  saleStartDate      DateTime?
+  saleEndDate        DateTime?
+  taxStatus          String?
+  taxClass           String?
+  inStock            Boolean           @default(true)
+  stock              Int?
+  lowStockAmount     Int?
+  allowBackorders    Boolean           @default(false)
+  soldIndividually   Boolean           @default(false)
+  weightKg           Float?
+  lengthCm           Float?
+  widthCm            Float?
+  heightCm           Float?
+  allowReviews       Boolean           @default(true)
+  purchaseNote       String?
+  salePrice          Float?
+  regularPrice       Float
+  shippingClass      String?
+  downloadLimit      Int?
+  downloadExpiryDays Int?
+  parentId           Int?
+  externalUrl        String?
+  buttonText         String?
+  position           Int?
+  brand              String?
+  badge              String?
+  imageUrl           String
+  hoverImage         String
+
+  // Relations
+  categories         ProductCategory[]
+  tags               ProductTag[]
+  images             ProductImage[]
+  upsellsOrigin      Upsell[]          @relation("ProductUpsellOrigin")
+  upsellsTarget      Upsell[]          @relation("ProductUpsellTarget")
+  crossSellsOrigin   CrossSell[]       @relation("ProductCrossSellOrigin")
+  crossSellsTarget   CrossSell[]       @relation("ProductCrossSellTarget")
+}
+
+model Category {
+  id        Int               @id @default(autoincrement())
+  name      String            @unique
+  products  ProductCategory[]
+}
+
+model ProductCategory {
+  id         Int      @id @default(autoincrement())
+  product    Product  @relation(fields: [productId], references: [id])
+  productId  Int
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId Int
+}
+
+model Tag {
+  id        Int           @id @default(autoincrement())
+  name      String        @unique
+  products  ProductTag[]
+}
+
+model ProductTag {
+  id        Int     @id @default(autoincrement())
+  product   Product @relation(fields: [productId], references: [id])
+  productId Int
+  tag       Tag     @relation(fields: [tagId], references: [id])
+  tagId     Int
+}
+
+model ProductImage {
+  id         Int     @id @default(autoincrement())
+  url        String
+  product    Product @relation(fields: [productId], references: [id])
+  productId  Int
+}
+
+model Upsell {
+  id        Int     @id @default(autoincrement())
+  product   Product @relation("ProductUpsellOrigin", fields: [productId], references: [id])
+  productId Int
+  upsell    Product @relation("ProductUpsellTarget", fields: [upsellId], references: [id])
+  upsellId  Int
+}
+
+model CrossSell {
+  id          Int     @id @default(autoincrement())
+  product     Product @relation("ProductCrossSellOrigin", fields: [productId], references: [id])
+  productId   Int
+  crossSell   Product @relation("ProductCrossSellTarget", fields: [crossSellId], references: [id])
+  crossSellId Int
+}
