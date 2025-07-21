@@ -4,7 +4,7 @@ import "@assets/scss/app.scss";
 import "@assets/icons/font-icon.css";
 import Head from "next/head";
 import { ReactNode } from "react";
-
+import { CartProvider } from "@src/context/CartContext";
 export function generateViewport(): Record<string, string | number> {
   return {
     width: "device-width",
@@ -36,7 +36,7 @@ export default function Layout({ children }: LayoutProps) {
         </title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <body>{children}</body>
+      <body>        <CartProvider>{children}  </CartProvider></body>
     </html>
   );
 }

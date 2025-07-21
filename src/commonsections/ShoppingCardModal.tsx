@@ -10,8 +10,22 @@ import miniCard3 from '@assets/images/mini-cart/mini-cart-03.jpg'
 import trust from '@assets/images/trust_img2.png'
 import AddToCardModal from '@src/commonsections/AddToCardModal';
 
+interface ProductImage {
+  url: string;
+}
 
-const ShoppingCardModal = ({ shoppingShow, handleShoppingClose }: any) => {
+interface Product {
+  id: number;
+  name: string;
+  regularPrice?: number | null;
+  salePrice: number;
+  badge?: string | null;
+  imageUrl: string;
+  hoverImage: string;
+  description?: string;
+  images?: ProductImage[];
+}
+const ShoppingCardModal = ({ shoppingShow, handleShoppingClose,product }: any) => {
 
     const [quantity, setQuantity] = useState(1);
     const [quantity2, setQuantity2] = useState(1);
@@ -58,14 +72,14 @@ const ShoppingCardModal = ({ shoppingShow, handleShoppingClose }: any) => {
                     <div className="p-20">
                         <div className="row">
                             <div className="col-5">
-                                <Image src={miniCard} alt="MiniCardImg" className="img-fluid" priority />
+                                <img src={product?.imageUrl} alt="MiniCardImg" className="img-fluid" priority />
                             </div>
                             <div className="col-7">
-                                <h6 className="mb-1"><Link href="#!" className="product-title">La Bohème Rose Gold</Link></h6>
+                                <h6 className="mb-1"><Link href="#!" className="product-title">{product?.name}</Link></h6>
                                 <p className="text-muted fs-12">Pink</p>
                                 <p className="fs-14 text-muted d-flex align-items-center gap-2">
-                                    <del>$60.00</del>
-                                    <span className="text-danger">$40.00</span>
+                                    <del>${product?.regularPrice}</del>
+                                    <span className="text-danger">${product?.salePrice}</span>
                                 </p>
                                 <div className="quantity fs-14 position-relative">
                                     <Form.Control type="number" readOnly value={quantity} className="input-text text-center" onChange={handleChange} />
@@ -97,7 +111,7 @@ const ShoppingCardModal = ({ shoppingShow, handleShoppingClose }: any) => {
                         </div>
                     </div>
 
-                    <div className="p-20 border-top">
+                    {/* <div className="p-20 border-top">
                         <div className="row">
                             <div className="col-lg-5">
                                 <Image src={miniCard2} alt="MiniCard2Img" className="img-fluid" priority />
@@ -177,7 +191,7 @@ const ShoppingCardModal = ({ shoppingShow, handleShoppingClose }: any) => {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                     <div className="px-20 py-3">
                         <ul className="mini_cart_tool list-unstyled d-flex gap-3 justify-content-center mb-0">
                             <li>
@@ -199,7 +213,7 @@ const ShoppingCardModal = ({ shoppingShow, handleShoppingClose }: any) => {
                 <div className="p-3 border-top">
                     <div className="d-flex align-items-center mb-3">
                         <h5 className="mb-0 flex-grow-1 fs-18">Subtotal:</h5>
-                        <Link href="#!" className="cart_tot_price fs-18 text-reset">$91.00</Link>
+                        <Link href="#!" className="cart_tot_price fs-18 text-reset">${product?.salePrice}</Link>
                     </div>
                     <p className="text-muted fs-13 mb-2">Taxes, shipping and discounts codes calculated at checkout</p>
                     <Form.Check

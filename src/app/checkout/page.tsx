@@ -17,9 +17,9 @@ import PopupPage from '@src/components/Popup'
 import TopBanner from '@src/components/Headers/TopBanner'
 import Header from '@src/components/Headers/Header'
 import HeadTitle from '@src/commonsections/HeadTitle'
-
+import { useCart } from "@src/context/CartContext";
 const Checkout = () => {
-
+const { items, clearCart } = useCart();
 
     const [formData, setFormData] = useState({
         firstName: '',
@@ -34,7 +34,7 @@ const Checkout = () => {
         phone: '',
         email: '',
         orderNotes: '',
-        paymentMethod: 'directBankTransfer',
+        paymentMethod: 'creditCard',
         cardNumber: '',
         cardExpiry: '',
         cardCvc: '',
@@ -49,11 +49,85 @@ const Checkout = () => {
         });
     };
 
-    const handleSubmit = (e: any) => {
-        e.preventDefault();
-        // Handle form submission
-        console.log('Form Data Submitted:', formData);
-    };
+    // const handleSubmit = (e: any) => {
+    //     e.preventDefault();
+    //     // Handle form submission
+    //     console.log('Form Data Submitted:', formData);
+    // };
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+
+  const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const shipping = 50;
+  const totalAmount = subtotal + shipping;
+
+  // 🔹 Step 1: Create order and store cart details
+  const res = await fetch("/api/orders/checkout", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ ...formData, items, totalAmount }),
+  });
+
+  const response = await res.json();
+
+  if (!res.ok) {
+    alert("❌ Failed to place order");
+    return;
+  }
+
+  const orderId = response.orderId;
+
+  if (paymentMethod === "creditCard") {
+    // 🔹 Step 2: Create Razorpay order
+    const payRes = await fetch("/api/payments/razorpay-order", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ amount: totalAmount, orderId }),
+    });
+    const { order } = await payRes.json();
+
+    // @ts-ignore
+    const rzp = new Razorpay({
+      key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID!,
+      amount: order.amount,
+      currency: order.currency,
+      name: "Your Store",
+      description: "Order Payment",
+      order_id: order.id,
+      handler: async function (response: any) {
+        const confirmRes = await fetch("/api/payments/verify", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            razorpayOrderId: response.razorpay_order_id,
+            razorpayPaymentId: response.razorpay_payment_id,
+            razorpaySignature: response.razorpay_signature,
+            amount: order.amount / 100,
+            orderId,
+          }),
+        });
+        if (confirmRes.ok) {
+          alert("✅ Razorpay payment successful");
+          clearCart();
+        } else {
+          alert("❌ Payment verified but backend update failed");
+        }
+      },
+      prefill: {
+        name: `${formData.firstName} ${formData.lastName}`,
+        email: formData.email,
+        contact: formData.phone,
+      },
+      theme: { color: "#1D4ED8" },
+    });
+
+    rzp.open();
+  } else {
+    // 🧾 Direct bank flow
+    alert(`✅ Order placed! Ref ID: ${orderId}`);
+    clearCart();
+  }
+};
 
     const [paymentMethod, setPaymentMethod] = useState('directBankTransfer');
 
@@ -314,18 +388,12 @@ const Checkout = () => {
                                     <h6 className="mb-0 lh-lg">Product</h6>
                                     <h6 className="mb-0 lh-lg">Subtotal</h6>
                                 </div>
-                                <div className="d-flex justify-content-between fw-medium border-bottom mb-0 p-2">
-                                    <h6 className="mb-0 lh-lg"><span className="fw-normal">Black mountain hat</span> x 1</h6>
-                                    <p className="mb-0 lh-lg">$50.00</p>
-                                </div>
-                                <div className="d-flex justify-content-between fw-medium border-bottom mb-0 p-2">
-                                    <h6 className="mb-0 lh-lg"><span className="fw-normal">Cream women pants</span> x 1</h6>
-                                    <p className="mb-0 lh-lg">$35.00</p>
-                                </div>
-                                <div className="d-flex justify-content-between fw-medium border-bottom mb-0 p-2">
-                                    <h6 className="mb-0 lh-lg">Subtotal</h6>
-                                    <p className="mb-0 lh-lg">$85.00</p>
-                                </div>
+                                {items.map(item => (
+  <div key={item.id} className="d-flex justify-content-between p-2 border-bottom">
+    <h6>{item.name} × {item.quantity}</h6>
+    <p>${(item.price * item.quantity).toFixed(2)}</p>
+  </div>
+))}
                                 <div className="d-flex justify-content-between fw-medium border-bottom mb-0 p-2">
                                     <h6 className="mb-0 lh-lg">Shipping</h6>
                                     <p className="mb-0 lh-lg">$50.00</p>

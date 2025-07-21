@@ -113,7 +113,7 @@ const ProductModal = ({ show, handleClose,product }: any) => {
                                     <del>${product?.regularPrice}</del>&nbsp;
                                         <span className="text-danger">${product?.salePrice}</span>
                                     </p>
-                                    <Link href="/product-detail-layout-01" className="text-body flex-shrink-0">
+                                    <Link href="/product/{product?.id}" className="text-body flex-shrink-0">
                                         <div className="kalles-rating-result">
                                             <span className="kalles-rating-result__pipe">
                                                 <span className="kalles-rating-result__start"></span>&nbsp;
