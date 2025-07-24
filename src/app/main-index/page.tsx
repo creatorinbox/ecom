@@ -49,7 +49,7 @@ const HomeDigital = () => {
                             <div className=" col-sm-4">
                                 <div className="text-center">
                                     <Image src={inf3} alt="Inf3Img" className="img-fluid square-sm" />
-                                    <h6 className="mt-2">30 DAYS RETURN</h6>
+                                    <h6 className="mt-2">WARRANTY PROTECTION</h6>
                                 </div>
                             </div>
                         </div>
@@ -69,7 +69,7 @@ const HomeDigital = () => {
                 <FeaturedCollection />
 
                 {/* Blog posts */}
-                <BlogPost />
+                {/* <BlogPost /> */}
 
                 {/* footer */}
                 <FooterDigital />
