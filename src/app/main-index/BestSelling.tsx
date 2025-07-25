@@ -39,14 +39,15 @@ const BestSelling = () => {
   }, []);
 
   const handleQuickView = (product: Product) => {
-        alert('te');
-
+     //   alert('te');
+       console.log("🔍 Quick view clicked for:", product?.name);
+console.log('acive',product);
     setActiveProduct(product);
     setShowModal(true);
   };
 
   const handleQuickShop = (product: Product) => {
-    alert('te');
+    //alert('te');
     setActiveProduct(product);
     setShowCartModal(true);
   };
@@ -58,7 +59,14 @@ const BestSelling = () => {
           <Col lg={8}>
             <div className="text-center mb-4">
               <h3 className="position-relative text-capitalize fs-24">
-                <span>Best Selling</span>
+                {products.length > 0 && (
+                  <div>
+                                  <span>Best Selling</span>
+
+  <button onClick={() => handleQuickView(products[0])} className="mb-3">
+    🔍 Test Quick View (First Product)
+  </button></div>
+)}
               </h3>
             </div>
           </Col>
@@ -107,7 +115,7 @@ const BestSelling = () => {
                     </Link>
 
                     {/* Quick View & Quick Shop */}
-                    <div className="product-button d-none d-lg-flex flex-column gap-2">
+<div className="product-button d-flex">
                       <button
                         className="btn rounded-pill fs-14"
                         onClick={() => handleQuickView(product)}
@@ -126,11 +134,14 @@ const BestSelling = () => {
 
                   {/* Product Info */}
                   <div className="mt-3">
+                                        <button onClick={() => handleQuickView(products[0])}>Test Quick View</button>
+
                     <h6 className="mb-1 fw-semibold fs-14">
                       <Link href={`/product/${product.id}`} className="main_link_blue">
                         {product.name}
                       </Link>
                     </h6>
+
                     <p className="mb-0 fs-14 text-muted">
                       {product.regularPrice && <del>${product.regularPrice}</del>}{" "}
                       <span className="text-danger">${product.salePrice}</span>

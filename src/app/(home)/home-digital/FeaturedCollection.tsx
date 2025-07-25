@@ -5,15 +5,53 @@ import Image from "next/image";
 import Link from "next/link";
 import ProductModal from "@src/commonsections/ProductModal";
 import AddToCardModal from "@src/commonsections/AddToCardModal";
+import { Product } from "@src/common/Header/mobileHeader";
+interface ProductImage {
+  url: string;
+}
+
+interface CategoryRelation {
+  category: {
+    name: string;
+  };
+}
+
+interface TagRelation {
+  tag: {
+    name: string;
+  };
+}
+
+interface AttributeValueRelation {
+  value: string;
+  attribute: {
+    name: string;
+  };
+}
+
+interface ProductAttribute {
+  attributeValue: AttributeValueRelation;
+}
 
 type Product = {
   id: number;
   name: string;
   imageUrl: string;
   hoverImage: string;
-  oldPrice?: number;
-  newPrice: number;
-  badge?: string;
+  regularPrice?: number | null;
+  salePrice: number;
+  badge?: string | null;
+  images?: ProductImage[];
+  sku: string;
+  shortDescription: string;
+  description: string;
+  weightKg: string;
+  lengthCm: string;
+  widthCm: string;
+  heightCm: string;
+  categories: CategoryRelation[];
+  tags: TagRelation[];
+  attributes: ProductAttribute[];
 };
 
 const FeaturedCard = ({ item }: { item: Product }) => {
@@ -35,7 +73,7 @@ const FeaturedCard = ({ item }: { item: Product }) => {
             </span>
           )}
           <Image
-            src={isHovered ? item.hoverImage : item.imageUrl}
+            src={isHovered ? item.imageUrl : item.imageUrl}
             alt={item.name}
             width={300}
             height={300}
@@ -65,15 +103,15 @@ const FeaturedCard = ({ item }: { item: Product }) => {
             </Link>
           </h6>
           <p className="mb-0 fs-14 text-muted">
-            {item.oldPrice && <del>${item.oldPrice}</del>}{" "}
-            <span className="text-danger">${item.newPrice}</span>
+            {item.regularPrice && <del>${item.regularPrice}</del>}{" "}
+            <span className="text-danger">${item.salePrice}</span>
           </p>
         </div>
       </div>
-      <ProductModal show={show} handleClose={() => setShow(false)} />
+      <ProductModal show={show} handleClose={() => setShow(false)} product={item}  />
       <AddToCardModal
         cardShow={cardShow}
-        handleAddToCardModalClose={() => setCardShow(false)}
+        handleAddToCardModalClose={() => setCardShow(false)} product={item}
       />
     </div>
   );

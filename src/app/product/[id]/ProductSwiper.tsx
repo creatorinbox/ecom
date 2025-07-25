@@ -14,8 +14,21 @@ import 'swiper/css/navigation';
 import "swiper/css/free-mode";
 import "swiper/css/thumbs";
 import Link from "next/link";
-interface ProductImage {
-  url: string;
+interface TagRelation {
+  tag: { name: string };
+}
+
+interface CategoryRelation {
+  category: { name: string };
+}
+
+interface AttributeValueRelation {
+  value: string;
+  attribute: { name: string };
+}
+
+interface ProductAttribute {
+  attributeValue: AttributeValueRelation;
 }
 
 interface Product {
@@ -28,7 +41,11 @@ interface Product {
   hoverImage: string;
   description?: string;
   images?: ProductImage[];
+  tags?: TagRelation[];
+  categories?: CategoryRelation[];
+  attributes?: ProductAttribute[];
 }
+
 const ProductSwiper = ({ handleShoppingShow,product }: any) => {
 const { addToCart } = useCart();
     const isMobile = useMediaQuery({ maxWidth: 1025 });
@@ -40,6 +57,16 @@ const { addToCart } = useCart();
   Array.isArray(product?.images) && product.images.length > 0
     ? product.images.map((img) => img.url)
     : [product?.imageUrl ?? "", product?.hoverImage ?? ""];
+    const colorOptions = product?.attributes
+  ?.filter(attr => attr.attributeValue?.attribute?.name?.toLowerCase() === "color")
+  ?.map(attr => attr.attributeValue.value) ?? [];
+
+const sizeOptions = product?.attributes
+  ?.filter(attr => attr.attributeValue?.attribute?.name?.toLowerCase() === "size")
+  ?.map(attr => attr.attributeValue.value) ?? [];
+
+const categoryNames = product?.categories?.map(c => c.category.name) ?? [];
+const tagNames = product?.tags?.map(t => t.tag.name) ?? [];
 const handleAddToCart = () => {
   addToCart({
     id: product.id,
@@ -173,64 +200,42 @@ const handleAddToCart = () => {
                             </p>
 
                             <div>
-                                <h6 className="text-uppercase fw-bold mb-3">
-                                    Color: <span>{color}</span>
-                                </h6>
-                                <div className="product-color-list mt-2 gap-2 d-flex align-items-center">
+                              {colorOptions.length > 0 && (
+  <div className="product-color-list mt-2 gap-2 d-flex align-items-center">
+    {colorOptions.map((clr, idx) => (
+      <OverlayTrigger key={idx} placement="top" overlay={<Tooltip>{clr}</Tooltip>}>
+        <Link
+          href="#!"
+          className={`d-inline-block rounded-circle square-xs ${color === clr ? "active" : ""}`}
+          style={{ backgroundColor: clr.toLowerCase(), border: "1px solid #ccc" }}
+          onClick={() => handleColorClick(clr)}
+        ></Link>
+      </OverlayTrigger>
+    ))}
+  </div>
+)}
 
-                                    <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-grey">Grey</Tooltip>}>
-                                        <Link
-                                            href="#!"
-                                            className={`d-inline-block bg-secondary bg-opacity-50 rounded-circle square-xs ${color === 'Grey' ? 'active' : ''}`}
-                                            onClick={() => handleColorClick('Grey')}
-                                        ></Link>
-                                    </OverlayTrigger>
 
-                                    <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-pink">Pink</Tooltip>}>
-                                        <Link
-                                            href="#!"
-                                            className={`d-inline-block bg_color_pink rounded-circle square-xs ${color === 'Pink' ? 'active' : ''}`}
-                                            onClick={() => handleColorClick('Pink')}
-                                        ></Link>
-                                    </OverlayTrigger>
 
-                                    <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-black">Black</Tooltip>}>
-                                        <Link
-                                            href="#!"
-                                            className={`d-inline-block bg-dark rounded-circle square-xs ${color === 'Black' ? 'active' : ''}`}
-                                            onClick={() => handleColorClick('Black')}
-                                        ></Link>
-                                    </OverlayTrigger>
-                                </div>
                             </div>
 
                             <div className="pt-2 mb-4 pb-3">
                                 <h6 className="text-uppercase fw-bold mt-3">
                                     Size: <span>{size}</span>
                                 </h6>
-                                <div className="product-color-list size mt-2 gap-2 d-flex align-items-center">
-                                    <Link
-                                        href="#!"
-                                        className={`d-inline-block rounded-circle square-xs d-flex align-items-center justify-content-center ${size === 'S' ? 'active' : ''}`}
-                                        onClick={() => handleSizeClick('S')}
-                                    >
-                                        S
-                                    </Link>
-                                    <Link
-                                        href="#!"
-                                        className={`d-inline-block rounded-circle square-xs d-flex align-items-center justify-content-center ${size === 'M' ? 'active' : ''}`}
-                                        onClick={() => handleSizeClick('M')}
-                                    >
-                                        M
-                                    </Link>
-                                    <Link
-                                        href="#!"
-                                        className={`d-inline-block rounded-circle square-xs d-flex align-items-center justify-content-center ${size === 'L' ? 'active' : ''}`}
-                                        onClick={() => handleSizeClick('L')}
-                                    >
-                                        L
-                                    </Link>
-                                </div>
+                              {sizeOptions.length > 0 && (
+  <div className="product-color-list size mt-2 gap-2 d-flex align-items-center">
+    {sizeOptions.map((sz, idx) => (
+      <Link key={idx}
+        href="#!"
+        className={`d-inline-block rounded-circle square-xs d-flex align-items-center justify-content-center ${size === sz ? "active" : ""}`}
+        onClick={() => handleSizeClick(sz)}
+      >
+        {sz}
+      </Link>
+    ))}
+  </div>
+)}
                             </div>
 
                             <div className="d-flex flex-wrap align-items-center gap-2 mt-4">
@@ -268,29 +273,15 @@ const handleAddToCart = () => {
 
                             <div className="mt-4">
                                 <p className="mb-2"><span>SKU :</span><span className="text-muted"> P15-2</span></p>
-                                <p className="mb-2">
-                                    <span>Categories:</span>
-                                    <span className="text-muted">
-                                        <Link href="#!" className="text-muted"> All, </Link>
-                                        <Link href="#!" className="text-muted">Best seller, </Link>
-                                        <Link href="#!" className="text-muted">Bottom, </Link>
-                                        <Link href="#!" className="text-muted">Dress, </Link>
-                                        <Link href="#!" className="text-muted">New Arrival, </Link>
-                                        <Link href="#!" className="text-muted"> Women</Link>
-                                    </span>
-                                </p>
-                                <p className="mb-0">
-                                    <span>Tags :</span>
-                                    <span className="text-muted">
-                                        <Link href="#!" className="text-muted"> Color Black, </Link>
-                                        <Link href="#!" className="text-muted">Color Grey, </Link>
-                                        <Link href="#!" className="text-muted">Color Pink, </Link>
-                                        <Link href="#!" className="text-muted">Price $7-$50, </Link>
-                                        <Link href="#!" className="text-muted">Size L, </Link>
-                                        <Link href="#!" className="text-muted">Size M, </Link>
-                                        <Link href="#!" className="text-muted">Size S, </Link>
-                                    </span>
-                                </p>
+                               <p className="text-muted mb-1">
+  <span className="text-body">Categories:</span>{" "}
+  {categoryNames.length > 0 ? categoryNames.join(", ") : "None"}
+</p>
+
+<p className="text-muted mb-1">
+  <span className="text-body">Tags:</span>{" "}
+  {tagNames.length > 0 ? tagNames.join(", ") : "None"}
+</p>
                             </div>
                             <div className="social-share mt-5">
                                 <div className="d-flex align-items-center gap-2">

@@ -56,6 +56,8 @@ model Product {
   upsellsTarget      Upsell[]          @relation("ProductUpsellTarget")
   crossSellsOrigin   CrossSell[]       @relation("ProductCrossSellOrigin")
   crossSellsTarget   CrossSell[]       @relation("ProductCrossSellTarget")
+  cartItems CartItem[] // 👈 defines the back-reference
+    attributes       ProductAttribute[] // 👈 Add this
 }
 
 model Category {
@@ -125,8 +127,11 @@ model Order {
   orderNotes    String?
   paymentMethod String
   totalAmount   Float
+    shipping   Float
+
   items         OrderItem[]
     payments      Payment[]
+    
 }
 
 model OrderItem {
@@ -149,4 +154,32 @@ model Payment {
   status          String    // e.g. "paid", "failed"
   method          String    // e.g. "Razorpay"
   order           Order     @relation(fields: [orderId], references: [id])
+}
+model CartItem {
+  id        Int     @id @default(autoincrement())
+  productId Int
+  quantity  Int
+  product   Product @relation(fields: [productId], references: [id])
+  createdAt DateTime @default(now())
+}
+model Attribute {
+  id       Int              @id @default(autoincrement())
+  name     String           @unique          // e.g. "Color", "Size"
+  values   AttributeValue[]
+}
+
+model AttributeValue {
+  id          Int              @id @default(autoincrement())
+  value       String           // e.g. "Red", "M", "Cotton"
+  attribute   Attribute        @relation(fields: [attributeId], references: [id])
+  attributeId Int
+  products    ProductAttribute[]
+}
+
+model ProductAttribute {
+  id                Int              @id @default(autoincrement())
+  product           Product          @relation(fields: [productId], references: [id])
+  productId         Int
+  attributeValue    AttributeValue  @relation(fields: [attributeValueId], references: [id])
+  attributeValueId  Int
 }

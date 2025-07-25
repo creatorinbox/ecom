@@ -1,184 +1,202 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Modal, Button, Row, OverlayTrigger, Tooltip } from "react-bootstrap";
-//import product from '@assets/images/quick_shop/p_qs_01.jpg'
 import Image from "next/image";
 import Link from "next/link";
+
 interface ProductImage {
   url: string;
+}
+interface TagRelation {
+  tag: { name: string };
+}
+interface CategoryRelation {
+  category: { name: string };
+}
+interface AttributeValue {
+  value: string;
+  attribute: {
+    name: string;
+  };
+}
+interface ProductAttribute {
+  attributeValue: AttributeValue;
 }
 
 interface Product {
   id: number;
   name: string;
+  imageUrl: string;
+  hoverImage: string;
   regularPrice?: number | null;
   salePrice: number;
   badge?: string | null;
-  imageUrl: string;
-  hoverImage: string;
-  description?: string;
   images?: ProductImage[];
+  sku: string;
+  tags: TagRelation[];
+  categories: CategoryRelation[];
+  shortDescription: string;
+  description: string;
+  weightKg: string;
+  lengthCm: string;
+  widthCm: string;
+  heightCm: string;
+  attributes?: ProductAttribute[];
 }
-const AddToCardModal = ({ cardShow, handleAddToCardModalClose,product }: any) => {
-    const [color, setColor] = useState('Grey');
-    const [size, setSize] = useState('M');
-    const [quantity, setQuantity] = useState(1);
 
-    const handleColorClick = (newColor: string) => {
-        setColor(newColor);
-    };
+const AddToCardModal = ({ cardShow, handleAddToCardModalClose, product }: { cardShow: boolean, handleAddToCardModalClose: () => void, product: Product }) => {
+    if (!product) return null;
+    const [color, setColor] = useState<string>("");
+  const [size, setSize] = useState<string>("");
+  const [quantity, setQuantity] = useState<number>(1);
 
-    const handleSizeClick = (newSize: string) => {
-        setSize(newSize);
-    };
+const colorOptions = product?.attributes
+  ?.filter(attr => attr.attributeValue?.attribute?.name?.toLowerCase() === "color")
+  ?.map(attr => attr.attributeValue.value) ?? [];
 
-    const handleQuantityChange = (change: number) => {
-        setQuantity((prev) => Math.max(1, prev + change)); // Ensure quantity is at least 1
-    };
+const sizeOptions = product?.attributes
+  ?.filter(attr => attr.attributeValue?.attribute?.name?.toLowerCase() === "size")
+  ?.map(attr => attr.attributeValue.value) ?? [];
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const value = Math.max(1, Math.min(100, Number(event.target.value))); // Ensure quantity is at least 1
-        setQuantity(value);
-    };
 
-    return (
-        <Modal show={cardShow} onHide={handleAddToCardModalClose} centered className="fade modal-overl mx-auto quickViewModall">
-            <Modal.Body>
-                <span className="fs-35 close position-absolute top-0 end-0" aria-label="Close" onClick={handleAddToCardModalClose}>
-                    <i className="pe-7s-close pegk"></i>
-                </span>
+  useEffect(() => {
+    if (colorOptions?.length) setColor(colorOptions[0]);
+    if (sizeOptions?.length) setSize(sizeOptions[0]);
+  }, [product]);
 
-                <Row>
-                    <div className="col-4">
-                        <Image src={product?.imageUrl} className="img-fluid" alt="Product Image" />
-                    </div>
-                    <div className="col-8">
-                        <h6>
-                            <Link className="cd chp" href="/product-detail-layout-01">
-                                {product?.name}
-                            </Link>
-                        </h6>
-                        <div className="d-flex mb-2 align-items-center">
-                            <div className="fs-16 me-1">
-                                <del className="text-muted">{product?.regularPrice}</del>&nbsp;
-                                <span className="text-danger">${product?.salePrice}</span>
-                            </div>
-                            <span className="bg-danger text-white p-1">{product?.badge}</span>
-                        </div>
-                    </div>
-                    <div className="text-center mt-4">
-                        <div>
-                            <h6 className="text-uppercase fw-bold mb-3">
-                                Color: <span>{color}</span>
-                            </h6>
-                            <div className="product-color-list mt-2 gap-2 d-flex align-items-center justify-content-center">
-                                {/* <OverlayTrigger placement="top" overlay={<Tooltip>Pink</Tooltip>}>
-                                    <Button
-                                        variant="link"
-                                        className={`d-inline-block bg_color_pink rounded-circle square-xs ${color === 'Pink' ? 'active' : ''}`}
-                                        onClick={() => handleColorClick('Pink')}
-                                    />
-                                </OverlayTrigger>
-                                <OverlayTrigger placement="top" overlay={<Tooltip>Grey</Tooltip>}>
-                                    <Button
-                                        variant="link"
-                                        className={`d-inline-block bg-secondary bg-opacity-50 rounded-circle ${color === 'Grey' ? 'active' : ''} square-xs`}
-                                        onClick={() => handleColorClick('Grey')}
-                                    />
-                                </OverlayTrigger>
-                                <OverlayTrigger placement="top" overlay={<Tooltip>Black</Tooltip>}>
-                                    <Button
-                                        variant="link"
-                                        className={`d-inline-block bg-dark rounded-circle ${color === 'Black' ? 'active' : ''} square-xs`}
-                                        onClick={() => handleColorClick('Black')}
-                                    />
-                                </OverlayTrigger> */}
-                                <OverlayTrigger
-                                    key="tooltip-pink"
-                                    placement="top"
-                                    overlay={<Tooltip id={`tooltip-pink`}>Pink</Tooltip>}
-                                >
-                                    <Link
-                                        href="#!"
-                                        className={`d-inline-block bg_color_pink rounded-circle square-xs ${color === 'Pink' ? 'active' : ''}`}
-                                        onClick={() => handleColorClick('Pink')}
-                                    ></Link>
-                                </OverlayTrigger>
-                                <OverlayTrigger
-                                    key="tooltip-black"
-                                    placement="top"
-                                    overlay={<Tooltip id="tooltip-black">Grey</Tooltip>}
-                                >
-                                    <Link
-                                        href="#!"
-                                        className={`d-inline-block bg-secondary bg-opacity-50 rounded-circle ${color === 'Grey' ? 'active' : ''} square-xs`}
-                                        onClick={() => handleColorClick('Grey')}
-                                    ></Link>
-                                </OverlayTrigger>
-                                <OverlayTrigger
-                                    key="tooltip-black"
-                                    placement="top"
-                                    overlay={<Tooltip id="tooltip-black">Black</Tooltip>}
-                                >
-                                    <Link
-                                        href="#!"
-                                        className={`d-inline-block bg-dark rounded-circle square-xs ${color === 'Black' ? 'active' : ''} square-xs`}
-                                        onClick={() => handleColorClick('Black')}
-                                    ></Link>
-                                </OverlayTrigger>
+  const handleQuantityChange = (change: number) => {
+    setQuantity(prev => Math.max(1, prev + change));
+  };
 
-                            </div>
-                        </div>
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = Math.max(1, Math.min(100, Number(event.target.value)));
+    setQuantity(value);
+  };
 
-                        <div className="mb-4 pt-2">
-                            <h6 className="text-uppercase fw-bold mt-3">
-                                Size: <span>{size}</span>
-                            </h6>
-                            <div className="product-color-list size mt-2 gap-2 d-flex align-items-center justify-content-center">
-                                <Link href="#!"
-                                    className={`d-inline-block rounded-circle square-xs d-flex align-items-center justify-content-center ${size === "S" ? 'active' : ""}`}
-                                    onClick={() => handleSizeClick("S")}
-                                >S</Link>
+const imagesToShow = Array.isArray(product?.images) && product.images.length > 0
+  ? product.images.map(img => img.url)
+  : [product?.imageUrl ?? ""];
 
-                                <Link href="#!"
-                                    className={`d-inline-block rounded-circle square-xs d-flex align-items-center justify-content-center ${size === "M" ? "active" : ""}`}
-                                    onClick={() => handleSizeClick("M")}
-                                >S</Link>
+const categoryNames = Array.isArray(product?.categories)
+  ? product.categories.map(c => c.category.name)
+  : [];
+const tagNames = Array.isArray(product?.tags)
+  ? product.tags.map(t => t.tag.name)
+  : [];
 
-                                <Link href="#!"
-                                    className={`d-inline-block rounded-circle square-xs d-flex align-items-center justify-content-center ${size === "L" ? "active" : ""}`}
-                                    onClick={() => handleSizeClick("L")}
-                                >L</Link>
-                            </div>
-                        </div>
-                        <div className="input-step border border-dark rounded-pill">
-                            <button type="button" className="minus material-shadow text-dark fw-bold" onClick={() => handleQuantityChange(-1)}>
-                                –
-                            </button>
-                            <input
-                                type="number"
-                                className="product-quantity fw-bold fs-6"
-                                value={quantity}
-                                onChange={handleChange}
-                            />
-                            <button type="button" className="plus material-shadow text-dark fw-bold" onClick={() => handleQuantityChange(1)}>
-                                +
-                            </button>
-                        </div>
-                        <div className="my-3">
-                            <Button type="submit" className="btn w-100 btn-teal rounded-pill text-uppercase px-4 fw-semibold">
-                                Add to cart
-                            </Button>
-                        </div>
-                        <Link href="/product-detail-layout-01" className="btn fs-16 fw-semibold detail_link">
-                            View full details
-                            <i className="facl facl-right ms-1"></i>
-                        </Link>
-                    </div>
-                </Row>
-            </Modal.Body>
-        </Modal>
-    );
+  return (
+    <Modal show={cardShow} onHide={handleAddToCardModalClose} centered className="fade modal-overl mx-auto quickViewModall">
+      <Modal.Body>
+        <span className="fs-35 close position-absolute top-0 end-0" aria-label="Close" onClick={handleAddToCardModalClose}>
+          <i className="pe-7s-close pegk"></i>
+        </span>
+
+        <Row>
+          <div className="col-4">
+            {imagesToShow.map((url, idx) => (
+              <Image key={idx} src={url} alt={`Product Image ${idx}`} width={300} height={300} className="img-fluid mb-2" />
+            ))}
+          </div>
+          <div className="col-8">
+            <h6>
+              <Link className="cd chp" href={`/product/${product.id}`}>
+                {product?.name}
+              </Link>
+            </h6>
+            <div className="d-flex mb-2 align-items-center">
+              <div className="fs-16 me-1">
+                {product?.regularPrice && <del className="text-muted">${product?.regularPrice}</del>}
+                <span className="text-danger ms-2">${product?.salePrice}</span>
+              </div>
+              {product?.badge && <span className="bg-danger text-white p-1">{product.badge}</span>}
+            </div>
+          </div>
+
+          <div className="text-center mt-4">
+            {colorOptions?.length > 0 && (
+              <>
+                <h6 className="text-uppercase fw-bold mb-3">Color: <span>{color}</span></h6>
+                <div className="product-color-list mt-2 gap-2 d-flex align-items-center justify-content-center">
+                  {colorOptions.map((clr, idx) => (
+                    <OverlayTrigger key={idx} placement="top" overlay={<Tooltip>{clr}</Tooltip>}>
+                      <Link
+                        href="#!"
+                        className={`d-inline-block rounded-circle square-xs ${color === clr ? 'active' : ''}`}
+                        style={{ backgroundColor: clr.toLowerCase(), border: '1px solid #ccc' }}
+                        onClick={() => setColor(clr)}
+                      ></Link>
+                    </OverlayTrigger>
+                  ))}
+                </div>
+              </>
+            )}
+
+            {sizeOptions?.length > 0 && (
+              <>
+                <h6 className="text-uppercase fw-bold mt-4">Size: <span>{size}</span></h6>
+                <div className="product-color-list size mt-2 gap-2 d-flex align-items-center justify-content-center">
+                  {sizeOptions.map((sz, idx) => (
+                    <Link key={idx}
+                      href="#!"
+                      className={`d-inline-block rounded-circle square-xs d-flex align-items-center justify-content-center ${size === sz ? 'active' : ''}`}
+                      onClick={() => setSize(sz)}
+                    >
+                      {sz}
+                    </Link>
+                  ))}
+                </div>
+              </>
+            )}
+
+            <div className="input-step border border-dark rounded-pill mt-4">
+              <button type="button" className="minus material-shadow text-dark fw-bold" onClick={() => handleQuantityChange(-1)}>–</button>
+              <input type="number" className="product-quantity fw-bold fs-6" value={quantity} onChange={handleChange} />
+              <button type="button" className="plus material-shadow text-dark fw-bold" onClick={() => handleQuantityChange(1)}>+</button>
+            </div>
+
+            <div className="my-3">
+              <Button
+                variant="teal"
+                className="text-uppercase rounded-pill min-w-150"
+                onClick={async () => {
+                  try {
+                    const res = await fetch("/api/cart/add", {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({ productId: product?.id, quantity }),
+                    });
+                    if (!res.ok) throw new Error("Add to cart failed");
+                    alert("🛒 Product added to cart!");
+                  } catch (err) {
+                    alert("❌ Error adding to cart");
+                    console.error(err);
+                  }
+                }}
+              >
+                Add to Cart
+              </Button>
+            </div>
+
+            <p className="text-muted mb-1"><span className="text-body">SKU:</span> {product?.sku}</p>
+
+            <p className="text-muted mb-1">
+              <span className="text-body">Categories:</span>{" "}
+              {categoryNames.length > 0 ? categoryNames.join(", ") : "None"}
+            </p>
+
+            <p className="text-muted mb-1">
+              <span className="text-body">Tags:</span>{" "}
+              {tagNames.length > 0 ? tagNames.join(", ") : "None"}
+            </p>
+
+            <Link href={`/product/${product?.id}`} className="btn fs-16 fw-semibold detail_link mt-3">
+              View full details <i className="facl facl-right ms-1"></i>
+            </Link>
+          </div>
+        </Row>
+      </Modal.Body>
+    </Modal>
+  );
 };
 
 export default AddToCardModal;
