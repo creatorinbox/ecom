@@ -46,16 +46,15 @@ const FooterDigital = () => {
                                     GOT QUESTIONS ?</h5>
                                 <div className="my-3">
                                     <div className="pb-3">
-                                        <h4 className="fs-18">(001) 2345-6789</h4>
-                                        <h4 className="fs-18">(001) 2345-6789</h4>
+                                        <h4 className="fs-18">(+91) 86750 01122</h4>
                                     </div>
                                     <p className="d-flex align-items-start text-muted gap-2">
                                         <i className="pegk pe-7s-map-marker fs-24"></i>
-                                        <span>184 Main Rd E, St Albans <br /> <span className="pl__30">VIC 3021, Australia</span></span>
+                                        <span>Basement Floor, Doshi Gardens, <br /> <span className="pl__30">No – 174, NSK Salai, Vadapalani,</span><span className="pl__30">Chennai, Tamil Nadu – 600026</span></span>
                                     </p>
                                     <p className="d-flex align-items-start text-muted gap-2">
                                         <i className="pegk pe-7s-mail fs-24"></i>
-                                        <Link href="mailto:contact@company.com" className="text-reset">contact@company.com</Link>
+                                        <Link href="mailto:support@icareservice.in" className="text-reset">support@icareservice.in</Link>
                                     </p>
 
                                 </div>
@@ -70,22 +69,13 @@ const FooterDigital = () => {
                                 <div className="mt-md-4 pt-md-2">
                                     <ul className="menu list-unstyled">
                                         <li className="menu-item">
-                                            <Link href="/shop-filter-sidebar" className="text-muted">Men</Link>
+                                            <Link href="/repair-services/apple-iphone-service-center-in-chennai" className="text-muted">iPhone Service</Link>
                                         </li>
                                         <li className="menu-item">
-                                            <Link href="/shop-filter-sidebar" className="text-muted">Women</Link>
+                                            <Link href="/repair-services/apple-ipad-service-center-in-chennai" className="text-muted">iPad Service</Link>
                                         </li>
                                         <li className="menu-item">
-                                            <Link href="/shop-1600px-layout" className="text-muted">Accessories</Link>
-                                        </li>
-                                        <li className="menu-item">
-                                            <Link href="/shop-1600px-layout" className="text-muted">Shoes</Link>
-                                        </li>
-                                        <li className="menu-item">
-                                            <Link href="/shop-1600px-layout" className="text-muted">Denim</Link>
-                                        </li>
-                                        <li className="menu-item">
-                                            <Link href="/shop-1600px-layout" className="text-muted">Dress</Link>
+                                            <Link href="/repair-services/macbook-service-center-in-chennai" className="text-muted">Macbook Service</Link>
                                         </li>
                                     </ul>
                                 </div>
@@ -100,22 +90,16 @@ const FooterDigital = () => {
                                 <div className="mt-md-4 pt-md-2">
                                     <ul className="menu list-unstyled">
                                         <li className="menu-item">
-                                            <Link href="#!" className="text-muted">About Us</Link>
+                                            <Link href="/about" className="text-muted">About Us</Link>
                                         </li>
                                         <li className="menu-item">
-                                            <Link href="#!" className="text-muted">Contact Us</Link>
+                                            <Link href="/contact" className="text-muted">Contact Us</Link>
                                         </li>
                                         <li className="menu-item">
-                                            <Link href="#!" className="text-muted">Terms &amp; Conditions</Link>
+                                            <Link href="/repair-services" className="text-muted">All Services</Link>
                                         </li>
                                         <li className="menu-item">
-                                            <Link href="#!" className="text-muted">Returns &amp; Exchanges</Link>
-                                        </li>
-                                        <li className="menu-item">
-                                            <Link href="#!" className="text-muted">Shipping &amp; Delivery</Link>
-                                        </li>
-                                        <li className="menu-item">
-                                            <Link href="#!" className="text-muted">Privacy Policy</Link>
+                                            <Link href="/my-account" className="text-muted">My Account</Link>
                                         </li>
                                     </ul>
                                 </div>
@@ -130,22 +114,19 @@ const FooterDigital = () => {
                                 <div className="mt-md-4 pt-md-2">
                                     <ul className="menu list-unstyled">
                                         <li className="menu-item">
-                                            <Link href="#!" className="text-muted">Store Location</Link>
+                                            <Link href="/terms-and-conditions" className="text-muted">Terms &amp; Conditions</Link>
                                         </li>
                                         <li className="menu-item">
-                                            <Link href="#!" className="text-muted">Latest News</Link>
+                                            <Link href="/return-exchange-policy" className="text-muted">Return Policy</Link>
                                         </li>
                                         <li className="menu-item">
-                                            <Link href="#!" className="text-muted">My Account</Link>
+                                            <Link href="/shipping-policy" className="text-muted">Shipping Policy</Link>
                                         </li>
                                         <li className="menu-item">
-                                            <Link href="#!" className="text-muted">Size Guide</Link>
+                                            <Link href="/privacy-policy" className="text-muted">Privacy Policy</Link>
                                         </li>
                                         <li className="menu-item">
-                                            <Link href="#!" className="text-muted">FAQs 2</Link>
-                                        </li>
-                                        <li className="menu-item">
-                                            <Link href="#!" className="text-muted">FAQs</Link>
+                                            <Link href="/repair-service-terms-and-conditions" className="text-muted">Repair Service Terms</Link>
                                         </li>
                                     </ul>
                                 </div>
@@ -184,8 +165,8 @@ const FooterDigital = () => {
                         <Col lg={6} className="text-muted text-start">
                             Copyright ©{" "}
                             {year}
-                            <Link href="#!" className="link-info"> Kalles</Link> all
-                            rights reserved. Powered by <span className="text-dark">The4</span>
+                            <Link href="/" className="link-info"> ICare</Link> all
+                            rights reserved. 
                         </Col>
                         <Col lg={6}>
                             <ul id="footer-menu" className="list-unstyled d-flex align-items-center mb-0 justify-content-lg-end">
@@ -193,13 +174,13 @@ const FooterDigital = () => {
                                     <Link href="/shop-filter-sidebar" className="text-muted mx-2">Shop</Link>
                                 </li>
                                 <li className="menu-item ">
-                                    <Link href="#!" className="text-muted mx-2">About Us</Link>
+                                    <Link href="/about" className="text-muted mx-2">About Us</Link>
                                 </li>
                                 <li className="menu-item ">
-                                    <Link href="#!" className="text-muted mx-2">Contact</Link>
+                                    <Link href="/contact" className="text-muted mx-2">Contact</Link>
                                 </li>
                                 <li className="menu-item ">
-                                    <Link href="#!" className="text-muted mx-2">Blog</Link>
+                                    <Link href="/repair-services" className="text-muted mx-2">All Services</Link>
                                 </li>
                             </ul>
                         </Col>

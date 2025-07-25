@@ -38,10 +38,6 @@ const AllServicesPage = () => {
         .hero-overlay {
           background-color: rgba(0, 0, 0, 0.5);
         }
-        .section-title {
-            font-weight: 600;
-            color: #2D3748;
-        }
         .service-card {
             background-color: #fff;
             border-radius: 0.5rem;
@@ -118,7 +114,7 @@ const AllServicesPage = () => {
             <section className="text-center mb-5">
                 <div className="row justify-content-center">
                     <div className="col-lg-8">
-                        <h2 className="section-title">Chennai’s most trusted mobile repair service now at your Doorstep!</h2>
+                        <h2 className="">Chennai’s most trusted mobile repair service now at your Doorstep!</h2>
                         <p className="mt-3 text-muted">
                             Experience Chennai's most trusted mobile repair service right at your doorstep! Whether you need repairs for iPhones, iPads, Samsung, OnePlus, MI, Vivo, IQOO, Oppo, Realme, Motorola devices, Kindle Fire tablets, or laptops, our expert technicians come to you with top-quality service and convenience. Enjoy hassle-free, reliable repairs with transparent pricing and a commitment to excellence. Schedule your appointment today and let us handle your tech troubles without you ever having to leave home!
                         </p>
@@ -142,12 +138,12 @@ const AllServicesPage = () => {
       <section className="py-5 redirect-section">
         <div className="container">
             <div className="text-center mb-5">
-                <h2 className="section-title">Find Your Repair Service</h2>
+                <h2 className="">Find Your Repair Service</h2>
                 <p className="text-muted mt-2">Select your device to get started.</p>
             </div>
             <div className="row g-4">
                 <div className="col-md-4">
-                    <a href="/iphone-repair" className="redirect-image-card shadow-sm" 
+                    <a href="/repair-services/apple-iphone-service-center-in-chennai" className="redirect-image-card shadow-sm" 
         style={{ backgroundImage: `url(${service1.src})` }}
                     >
                         <div className="redirect-card-overlay">
@@ -156,7 +152,7 @@ const AllServicesPage = () => {
                     </a>
                 </div>
                 <div className="col-md-4">
-                    <a href="/ipad-repair" className="redirect-image-card shadow-sm" 
+                    <a href="/repair-services/apple-ipad-service-center-in-chennai" className="redirect-image-card shadow-sm" 
         style={{ backgroundImage: `url(${service2.src})` }}
             >
     <div className="redirect-card-overlay">
@@ -165,7 +161,7 @@ const AllServicesPage = () => {
                     </a>
                 </div>
                 <div className="col-md-4">
-                    <a href="/macbook-repair" className="redirect-image-card shadow-sm" 
+                    <a href="/repair-services/macbook-service-center-in-chennai" className="redirect-image-card shadow-sm" 
         style={{ backgroundImage: `url(${service3.src})` }}
             >
                             <div className="redirect-card-overlay">

@@ -478,10 +478,10 @@ const LayoutHeader8 = () => {
                                     </li>
 
 
-                                    <li className="nav-item dropdown dropdown-mega-xxl nav-electric-item">
+                                    {/* <li className="nav-item dropdown dropdown-mega-xxl nav-electric-item">
                                        <Link className="text-muted position-relative d-inline-flex" href="/product-detail-full-width"> <span className={`nav-link text-white ${showw === 4 ? 'show' : ''}`} style={{ height: "50px" }}  data-bs-toggle="dropdown" aria-expanded="false" onClick={() => handleMenuClick(4)}>
                                             Product
-                                        </span></Link> 
+                                        </span></Link>  */}
                                       { /* <div className={`dropdown-menu ${showw === 4 ? 'show' : ""}`}>
                                             <div className="row">
                                                 {/* <div className="col-lg-3">
@@ -553,6 +553,26 @@ const LayoutHeader8 = () => {
                                                 </div> */}
                                             {/* </div>
                                        </div>  */}
+                                    {/* </li> */}
+                                    <li className="nav-item dropdown dropdown-mega-xxl nav-electric-item">
+                                       <Link className="text-muted position-relative d-inline-flex" href="/repair-services"> <span className={`nav-link text-white ${showw === 4 ? 'show' : ''}`} style={{ height: "50px" }}  data-bs-toggle="dropdown" aria-expanded="false" onClick={() => handleMenuClick(4)}>
+                                            Repair
+                                        </span></Link> 
+                                    </li>
+                                    <li className="nav-item dropdown dropdown-mega-xxl nav-electric-item">
+                                       <Link className="text-muted position-relative d-inline-flex" href="/about"> <span className={`nav-link text-white ${showw === 4 ? 'show' : ''}`} style={{ height: "50px" }}  data-bs-toggle="dropdown" aria-expanded="false">
+                                            About
+                                        </span></Link> 
+                                    </li>
+                                    <li className="nav-item dropdown dropdown-mega-xxl nav-electric-item">
+                                       <Link className="text-muted position-relative d-inline-flex" href="/contact"> <span className={`nav-link text-white ${showw === 4 ? 'show' : ''}`} style={{ height: "50px" }}  data-bs-toggle="dropdown" aria-expanded="false">
+                                            Contact
+                                        </span></Link> 
+                                    </li>
+                                    <li className="nav-item dropdown dropdown-mega-xxl nav-electric-item">
+                                       <Link className="text-muted position-relative d-inline-flex" href="/my-account"> <span className={`nav-link text-white ${showw === 4 ? 'show' : ''}`} style={{ height: "50px" }}  data-bs-toggle="dropdown" aria-expanded="false">
+                                            My Account
+                                        </span></Link> 
                                     </li>
                                     {/* <li className="nav-item dropdown dropdown-mega-lg nav-electric-item">
                                         <span className={`nav-link text-white ${showw === 5 ? 'show' : ''}`} style={{ height: "50px" }}  role="button" data-bs-toggle="dropdown" aria-expanded="false" onClick={() => handleMenuClick(5)}>
@@ -583,11 +603,11 @@ const LayoutHeader8 = () => {
                                     </li> */}
                                 </ul>
                                 <div className="d-flex align-items-xl-center justify-content-center justify-content-md-start gap-3">
-                                    <Link href="mailto:Kalles@domain.com" className="mb-0 text-white fs-12"><i className="pe-7s-mail pegk fs-14 me-1 align-middle"></i> contact</Link>
+                                    <Link href="mailto:support@icareservice.in" className="mb-0 text-white fs-12"><i className="pe-7s-mail pegk fs-14 me-1 align-middle"></i> contact</Link>
                                     <Link href="mailto:Kalles@domain.com" className="mb-0 text-white fs-12"><i className="las la-clock "></i>
-                                        08:00 - 17:00</Link>
-                                    <Link href="tel:+01 23456789" className="mb-0 text-white fs-12"><i className="pegk pe-7s-call fs-14 me-1 align-middle"></i>
-                                        +01 23456789</Link>
+                                        10:00 - 20:00</Link>
+                                    <Link href="tel:+918675001122" className="mb-0 text-white fs-12"><i className="pegk pe-7s-call fs-14 me-1 align-middle"></i>
+                                        +91 86750 01122</Link>
                                 </div>
                             </div>
                         </div>
