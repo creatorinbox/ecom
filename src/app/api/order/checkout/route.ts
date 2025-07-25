@@ -19,8 +19,9 @@ export async function POST(req: Request) {
         zipcode: data.zipcode,
         companyName: data.companyName,
         orderNotes: data.orderNotes,
-        paymentMethod: data.paymentMethod,
+        paymentMethod: 'razorpay',
         totalAmount: data.totalAmount,
+        shipping:data.shipping,
         items: {
           create: data.items.map((item: any) => ({
             productId: item.id,

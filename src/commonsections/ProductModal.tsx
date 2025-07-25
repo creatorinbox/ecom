@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, {useEffect, useState } from "react";
 import { Modal, Button, Row,  Col, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -10,21 +10,80 @@ interface ProductImage {
   url: string;
 }
 
-interface Product {
+interface CategoryRelation {
+  category: {
+    name: string;
+  };
+}
+
+interface TagRelation {
+  tag: {
+    name: string;
+  };
+}
+
+interface AttributeValueRelation {
+  value: string;
+  attribute: {
+    name: string;
+  };
+}
+
+interface ProductAttribute {
+  attributeValue: AttributeValueRelation;
+}
+
+type Product = {
   id: number;
   name: string;
+  imageUrl: string;
+  hoverImage: string;
   regularPrice?: number | null;
   salePrice: number;
   badge?: string | null;
-  imageUrl: string;
-  hoverImage: string;
-  description?: string;
   images?: ProductImage[];
-}
+  sku: string;
+  shortDescription: string;
+  description: string;
+  weightKg: string;
+  lengthCm: string;
+  widthCm: string;
+  heightCm: string;
+  categories: CategoryRelation[];
+  tags: TagRelation[];
+  attributes: ProductAttribute[];
+};
 const ProductModal = ({ show, handleClose,product }: any) => {
     const [selectedColor, setSelectedColor] = useState('Pink');
     const [size, setSize] = useState("XS")
     const [quantity, setQuantity] = useState(1);
+const categoryNames = product?.categories?.map(c => c.category.name);
+const tagNames = product?.tags?.map(t => t.tag.name);
+const colorOptions = product?.attributes
+  ?.filter(attr => attr.attributeValue?.attribute?.name?.toLowerCase() === "color")
+  ?.map(attr => attr.attributeValue.value);
+
+const sizeOptions = product?.attributes
+  ?.filter(attr => attr.attributeValue?.attribute?.name?.toLowerCase() === "size")
+  ?.map(attr => attr.attributeValue.value);
+
+
+
+// Inside your ProductModal component
+useEffect(() => {
+  if (product) {
+    console.log("🧾 Product data:", product);
+  }
+}, [product]);
+
+//     const colorOptions = product?.attributes
+//   ?.filter(attr => attr.attribute.name.toLowerCase() === "color")
+//   ?.map(attr => attr.value);
+
+// const sizeOptions = product?.attributes
+//   ?.filter(attr => attr.attribute.name.toLowerCase() === "size")
+//   ?.map(attr => attr.value);
+
  const imagesToShow =
   Array.isArray(product?.images) && product.images.length > 0
     ? product.images.map((img) => img.url)
@@ -126,11 +185,9 @@ const ProductModal = ({ show, handleClose,product }: any) => {
                                         </div>
                                     </Link>
                                 </div>
-                                <p className="text-muted">Go kalles this summer with this vintage navy and white striped v-neck
-                                    t-shirt from the Nike. Perfect for pairing with denim and white kicks for a stylish
-                                    kalles vibe.</p>
+                                <p className="text-muted">{product?.shortDescription}</p>
 
-                                <h6 className="text-uppercase mb-3">Color: <span>{selectedColor}</span></h6>
+                                {/* <h6 className="text-uppercase mb-3">Color: <span>{selectedColor}</span></h6>
                                 <div className="product-color-list mt-2 gap-2 d-flex align-items-center">
                                     <OverlayTrigger
                                         key="tooltip-pink"
@@ -154,9 +211,32 @@ const ProductModal = ({ show, handleClose,product }: any) => {
                                             onClick={() => handleColorClick('Black')}
                                         ></Link>
                                     </OverlayTrigger>
-                                </div>
+                                </div> */}
+                              {colorOptions?.length > 0 && (
+  <>
+    <h6 className="text-uppercase mb-3">Color: <span>{selectedColor}</span></h6>
+    <div className="product-color-list mt-2 gap-2 d-flex align-items-center">
+      {colorOptions.map((color, idx) => (
+        <OverlayTrigger
+          key={idx}
+          placement="top"
+          overlay={<Tooltip id={`tooltip-${color}`}>{color}</Tooltip>}
+        >
+          <Link
+            href="#!"
+            className={`d-inline-block rounded-circle square-xs ${selectedColor === color ? 'active' : ''}`}
+            style={{ backgroundColor: color.toLowerCase(), border: '1px solid #ccc' }}
+            onClick={() => handleColorClick(color)}
+          ></Link>
+        </OverlayTrigger>
+      ))}
+    </div>
+  </>
+)}
+
+
                                 <div className="mt-4 pt-2">
-                                    <h6 className="text-uppercase mb-3">Size: <span>{size}</span></h6>
+                                    {/* <h6 className="text-uppercase mb-3">Size: <span>{size}</span></h6>
                                     <div className="product-color-list size mt-2 gap-2 d-flex align-items-center">
                                         <Link href="#!"
                                             className={`d-inline-block rounded-circle square-xs d-flex align-items-center justify-content-center ${size === "XS" ? 'active' : ""}`}
@@ -172,7 +252,25 @@ const ProductModal = ({ show, handleClose,product }: any) => {
                                             className={`d-inline-block rounded-circle square-xs d-flex align-items-center justify-content-center ${size === "M" ? "active" : ""}`}
                                             onClick={() => handleSizeClick("M")}
                                         >M</Link>
-                                    </div>
+                                    </div> */}
+                                  {sizeOptions?.length > 0 && (
+  <>
+    <h6 className="text-uppercase mb-3">Size: <span>{size}</span></h6>
+    <div className="product-color-list size mt-2 gap-2 d-flex align-items-center">
+      {sizeOptions.map((sz, idx) => (
+        <Link
+          key={idx}
+          href="#!"
+          className={`d-inline-block rounded-circle square-xs d-flex align-items-center justify-content-center ${size === sz ? 'active' : ''}`}
+          onClick={() => handleSizeClick(sz)}
+        >
+          {sz}
+        </Link>
+      ))}
+    </div>
+  </>
+)}
+
                                 </div>
 
                                 <div className="d-flex flex-wrap align-items-center gap-2 mt-4">
@@ -181,9 +279,35 @@ const ProductModal = ({ show, handleClose,product }: any) => {
                                         <input type="number" className="product-quantity fw-bold fs-6" value={quantity} min="0" max="100" onChange={handleChange} />
                                         <button className="plus material-shadow text-dark fw-bold" onClick={handleIncrements}><i className="facl facl-plus"></i></button>
                                     </div>
-                                    <Button variant="teal" className="text-uppercase rounded-pill min-w-150">
+                                    {/* <Button variant="teal" className="text-uppercase rounded-pill min-w-150">
                                         Add to Cart
-                                    </Button>
+                                    </Button> */}
+                                    <Button
+  variant="teal"
+  className="text-uppercase rounded-pill min-w-150"
+  onClick={async () => {
+    try {
+      const res = await fetch("/api/cart/add", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          productId: product?.id,
+          quantity,
+        }),
+      });
+
+      if (!res.ok) throw new Error("Add to cart failed");
+
+      alert("🛒 Product added to cart!");
+    } catch (err) {
+      alert("❌ Error adding to cart");
+      console.error(err);
+    }
+  }}
+>
+  Add to Cart
+</Button>
+
                                     <div className="product_wishlist square-40 rounded-circle border border-dark bg-transparent text-center" style={{ lineHeight: '40px' }}>
                                         <Link href="#"><i className="facl facl-heart-o"></i></Link>
                                     </div>
@@ -192,13 +316,38 @@ const ProductModal = ({ show, handleClose,product }: any) => {
                                     <Image src={trust} alt="TrustImg" className="img-fluid" />
                                 </div>
                                 <div className="mt-4">
-                                    <p className="text-muted mb-1"><span className="text-body">SKU:</span> 4540967714955-111</p>
-                                    <p className="text-muted mb-1"><span className="text-body">Categories:</span> <Link href="#!" className="main_link text-muted">Accessories</Link>, <a href="#!" className="main_link text-muted">All</a>, <a href="#!" className="main_link text-muted">Best seller</a>, <a href="#!" className="main_link text-muted">New
+                                    <p className="text-muted mb-1"><span className="text-body">SKU:</span> {product?.sku}</p>
+                                   <p className="text-muted mb-1">
+  <span className="text-body">Categories:</span>{" "}
+  {categoryNames?.length > 0
+    ? categoryNames.map((cat, idx) => (
+        <Link key={idx} href={`/category/${encodeURIComponent(cat)}`} className="main_link text-muted">
+          {cat}
+        </Link>
+      )).reduce((prev, curr) => [prev, ", ", curr])
+    : <span className="text-muted">No categories</span>}
+</p>
+
+<p className="text-muted mb-1">
+  <span className="text-body">Tags:</span>{" "}
+  {tagNames?.length > 0
+    ? tagNames.map((tag, idx) => (
+        <Link key={idx} href={`/tag/${encodeURIComponent(tag)}`} className="main_link text-muted">
+          {tag}
+        </Link>
+      )).reduce((prev, curr) => [prev, ", ", curr])
+    : <span className="text-muted">No tags</span>}
+</p>
+
+
+                                    {/* <p className="text-muted mb-1"><span className="text-body">Categories:</span> <Link href="#!" className="main_link text-muted">Accessories</Link>, <a href="#!" className="main_link text-muted">All</a>, <a href="#!" className="main_link text-muted">Best seller</a>, <a href="#!" className="main_link text-muted">New
                                         Arrival</a>, <Link href="#!" className="main_link text-muted">Sale</Link>, <Link href="#!" className="main_link text-muted">Watches</Link>, <a href="#!" className="main_link text-muted">Women</a></p>
                                     <p className="text-muted mb-1"><span className="text-body">Tags:</span> <Link href="#!" className="main_link text-muted">Color Black</Link>, <a href="#!" className="main_link text-muted">Color
                                         Pink</a>, <Link href="#!" className="main_link text-muted">Price $7-$50</Link>, <Link href="#!" className="main_link text-muted">Vendor Kalles</Link>, <a href="#!" className="main_link text-muted">Watch</a>,
                                         <Link href="#!" className="main_link text-muted">Women</Link>
-                                    </p>
+                                    </p> */}
+                                   
+
                                 </div>
                                 <div>
                                     <div className="social-share mt-4 mb-3">

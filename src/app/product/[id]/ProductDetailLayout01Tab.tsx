@@ -18,18 +18,27 @@ import thumbsticky from '@assets/images/single-product/layout-02/thumb-sticky.jp
 interface ProductImage {
   url: string;
 }
-
-interface Product {
+interface tags{
+  name:string;
+}
+type Product = {
   id: number;
   name: string;
+  imageUrl: string;
+  hoverImage: string;
   regularPrice?: number | null;
   salePrice: number;
   badge?: string | null;
-  imageUrl: string;
-  hoverImage: string;
-  description?: string;
   images?: ProductImage[];
-}
+  sku:string;
+  tags: tags[];
+  shortDescription:string;
+  description:string;
+  weightKg:string;
+   lengthCm  :         string;
+  widthCm    :      string;
+  heightCm    :       string;
+};
 const ProductDetailLayout01Tab = ({ product }:any) => {
 
     const [show, setShow] = useState(false);
