@@ -30,16 +30,36 @@ const [showThankYou, setShowThankYou] = useState(false);
     email: "",
     orderNotes: "",
   });
+const [cartItems, setCartItems] = useState<any[]>([]);
+
+useEffect(() => {
+  const fetchCartItems = async () => {
+    try {
+      const res = await fetch("/api/cart/items");
+      const data = await res.json();
+      setCartItems(data);
+    } catch (err) {
+      console.error("Error fetching cart items", err);
+    }
+  };
+
+  fetchCartItems();
+}, []);
 
   const handleChange = (e: any) => {
     const { id, value } = e.target;
     setFormData((prev) => ({ ...prev, [id]: value }));
   };
 
-  const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const shipping = 50;
-  const totalAmount = subtotal + shipping;
+  // const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  // const shipping = 50;
+  // const totalAmount = subtotal + shipping;
+const subtotal = cartItems.reduce((sum, item) => {
+  return sum + item.product.salePrice * item.quantity;
+}, 0);
 
+const shipping = 50;
+const totalAmount = subtotal + shipping;
   useEffect(() => {
     const script = document.createElement("script");
     script.src = "https://checkout.razorpay.com/v1/checkout.js";
@@ -52,7 +72,9 @@ const [showThankYou, setShowThankYou] = useState(false);
     const orderRes = await fetch("/api/order/checkout", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...formData, items, totalAmount,shipping }),
+      //body: JSON.stringify({ ...formData, items, totalAmount,shipping }),
+      body: JSON.stringify({ ...formData, items: cartItems, totalAmount, shipping }),
+
     });
 
     const orderResponse = await orderRes.json();
@@ -189,12 +211,19 @@ const [showThankYou, setShowThankYou] = useState(false);
 
             <Col md={5}>
               <h3 className="border-bottom pb-3 mb-4">Your Order</h3>
-              {items.map((item) => (
+              {/* {items.map((item) => (
                 <div key={item.id} className="d-flex justify-content-between border-bottom py-2">
                   <span>{item.name} × {item.quantity}</span>
                   <span>₹{item.price * item.quantity}</span>
                 </div>
-              ))}
+              ))} */}
+              {cartItems.map((item) => (
+  <div key={item.id} className="d-flex justify-content-between border-bottom py-2">
+    <span>{item.product.name} × {item.quantity}</span>
+    <span>₹{item.product.salePrice * item.quantity}</span>
+  </div>
+))}
+
               <div className="d-flex justify-content-between border-bottom py-2 fw-bold">
                 <span>Shipping</span>
                 <span>₹{shipping}</span>

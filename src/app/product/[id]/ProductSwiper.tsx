@@ -67,7 +67,7 @@ const sizeOptions = product?.attributes
 
 const categoryNames = product?.categories?.map(c => c.category.name) ?? [];
 const tagNames = product?.tags?.map(t => t.tag.name) ?? [];
-const handleAddToCart = () => {
+const handleAddToCart =  async () => {
   addToCart({
     id: product.id,
     name: product.name + ` (${color}, ${size})`,
@@ -75,8 +75,29 @@ const handleAddToCart = () => {
     quantity,
     image: product?.images?.[0]?.url || product.imageUrl || "",
   });
+ try {
+    const res = await fetch("/api/cart/add", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        productId: product.id,
+        name: product.name,
+        price: product.salePrice,
+        quantity: product.quantity,
+        image: product?.images?.[0]?.url || product.imageUrl || "",
+        color,
+        size,
+      }),
+    });
 
-  handleShoppingShow(); // Optional: trigger shopping cart modal
+    if (!res.ok) throw new Error("Add to cart failed");
+    alert("🛒 Product added to cart!");
+    handleShoppingShow(); // Optional modal trigger
+  } catch (err) {
+    alert("❌ Error adding to cart");
+    console.error(err);
+  }
+  //handleShoppingShow(); // Optional: trigger shopping cart modal
 };
 
     const handleColorClick = (newColor: string) => {

@@ -70,7 +70,7 @@ export default function ProductDetailsPage() {
           </Row>
           <LikeProducts />
         </div>
-        <div className="container">
+        {/* <div className="container">
           <Row className="justify-content-center mt-3 mt-lg-5 pt-2">
             <Col lg={7}>
               <div className="text-center mb-lg-4 pb-lg-2">
@@ -79,7 +79,7 @@ export default function ProductDetailsPage() {
             </Col>
           </Row>
           <ViewedProduct />
-        </div>
+        </div> */}
       </section>
 
       <FooterPage />

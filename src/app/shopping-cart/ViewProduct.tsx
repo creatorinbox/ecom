@@ -18,9 +18,50 @@ import 'flickity/css/flickity.css';
 import Image from 'next/image'
 import ProductModal from '@src/commonsections/ProductModal'
 import AddToCardModal from '@src/commonsections/AddToCardModal'
+interface ProductImage {
+  url: string;
+}
+interface TagRelation {
+  tag: { name: string };
+}
+interface CategoryRelation {
+  category: { name: string };
+}
+interface AttributeValue {
+  value: string;
+  attribute: {
+    name: string;
+  };
+}
+interface ProductAttribute {
+  attributeValue: AttributeValue;
+}
 
+interface Product {
+  id: number;
+  name: string;
+  imageUrl: string;
+  hoverImage: string;
+  regularPrice?: number | null;
+  salePrice: number;
+  badge?: string | null;
+  images?: ProductImage[];
+  sku: string;
+  tags: TagRelation[];
+  categories: CategoryRelation[];
+  shortDescription: string;
+  description: string;
+  weightKg: string;
+  lengthCm: string;
+  widthCm: string;
+  heightCm: string;
+  attributes?: ProductAttribute[];
+}
+type Props = {
+  product: Product;
+};
 
-const ViewedProduct = () => {
+const ViewedProduct = ({ product }:Props) => {
     const [imageUrl3, setImageUrl3] = useState(pro15);
     const [isHovered3, setIsHovered3] = useState(false);
     const [imageUrl4, setImageUrl4] = useState(pro27);
@@ -724,7 +765,7 @@ const ViewedProduct = () => {
             </Row>
 
             <ProductModal show={show} handleClose={handleClose} />
-            <AddToCardModal cardShow={cardShow} handleAddToCardModalClose={handleAddToCardModalClose} />
+            <AddToCardModal cardShow={cardShow} handleAddToCardModalClose={handleAddToCardModalClose} product={product} />
         </React.Fragment>
     )
 }

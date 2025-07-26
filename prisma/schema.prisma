@@ -16,6 +16,8 @@ model Product {
   published          Boolean           @default(false)
   isFeatured         Boolean           @default(false)
   isBestSelling      Boolean           @default(false)
+    liked      Boolean           @default(false)
+
   visibility         String?
   shortDescription   String?
   description        String?

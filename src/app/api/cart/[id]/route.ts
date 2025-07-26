@@ -1,28 +1,24 @@
 import { PrismaClient } from "@prisma/client";
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
 
-export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
-  const cartItemId = parseInt(params.id, 10);
+// 💡 This matches the Next.js App Router expectations perfectly
+export async function DELETE(_: Request, { params }: { params: { id: string } }) {
 
-  if (isNaN(cartItemId)) {
-    return new Response(JSON.stringify({ error: "Invalid cart item ID" }), {
-      status: 400,
-    });
+  //const { id } = context.params;
+ // const cartItemId = parseInt(id, 10);
+
+  if (isNaN(Number(params.id))) {
+    return NextResponse.json({ error: "Invalid ID" }, { status: 400 });
   }
 
   try {
-    await prisma.cartItem.delete({
-      where: { id: cartItemId },
-    });
+    await prisma.cartItem.delete({ where: { id: Number(params.id) } });
 
-    return new Response(JSON.stringify({ message: "Cart item deleted" }), {
-      status: 200,
-    });
+    return NextResponse.json({ success: true, message: "Item deleted" });
   } catch (err) {
-    return new Response(JSON.stringify({ error: "Error deleting cart item" }), {
-      status: 500,
-    });
+    console.error("Delete error:", err);
+    return NextResponse.json({ error: "Delete failed" }, { status: 500 });
   }
 }
