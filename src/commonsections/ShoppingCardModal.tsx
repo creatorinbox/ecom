@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Offcanvas, Button, Form } from 'react-bootstrap';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -26,12 +26,34 @@ interface Product {
   images?: ProductImage[];
 }
 const ShoppingCardModal = ({ shoppingShow, handleShoppingClose,product }: any) => {
-
+const [cartItems, setCartItems] = useState<any[]>([]); // or create a proper CartItem type
     const [quantity, setQuantity] = useState(1);
     const [quantity2, setQuantity2] = useState(1);
     const [quantity3, setQuantity3] = useState(1);
     const [cardShow, setCardShow] = useState(false);
+useEffect(() => {
+  const fetchCart = async () => {
+    try {
+      const res = await fetch("/api/cart/items");
+      const data = await res.json();
+      setCartItems(data);
+    } catch (err) {
+      console.error("Error fetching cart items", err);
+    }
+  };
 
+  if (shoppingShow) fetchCart(); // only fetch when modal is open
+}, [shoppingShow]);
+const handleDelete = async (id: number) => {
+  try {
+    const res = await fetch(`/api/cart/${id}`, { method: "DELETE" });
+    if (res.ok) {
+      setCartItems(prev => prev.filter(item => item.id !== id));
+    }
+  } catch (err) {
+    console.error("Failed to delete item", err);
+  }
+};
     const handleQuantityChange = (change: number) => {
         setQuantity((prev) => Math.max(0, prev + change));
     };
@@ -68,8 +90,38 @@ const ShoppingCardModal = ({ shoppingShow, handleShoppingClose,product }: any) =
                     </h6>
                 </div>
                 <Offcanvas.Body className='p-0'>
+{cartItems.map((item) => {
+  const product = item.product;
+  return (
+    <div className="p-20 border-top" key={item.id}>
+      <div className="row">
+        <div className="col-lg-5">
+          <img src={product.imageUrl} alt={product.name} className="img-fluid" />
+        </div>
+        <div className="col-7">
+          <h6 className="mb-1">
+            <Link href="#!" className="product-title">{product.name}</Link>
+          </h6>
+          <p className="text-muted fs-12">{item.color} / {item.size}</p>
+          <p className="fs-14 text-muted d-flex align-items-center gap-2">
+            <del>${product.regularPrice}</del>
+            <span className="text-danger">${product.salePrice}</span>
+          </p>
+          {/* Quantity controls (optional) */}
+          <div className="quantity fs-14 position-relative">
+            <Form.Control type="number" readOnly value={item.quantity} className="input-text text-center" />
+          </div>
+          <div className="d-flex align-items-center gap-3 mt-2">
+            <Link href="#!" onClick={() => handleEdit(item)}>✏️</Link>
+            <Link href="#!" onClick={() => handleDelete(item.id)}>🗑️</Link>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+})}
 
-                    <div className="p-20">
+                    {/* <div className="p-20">
                         <div className="row">
                             <div className="col-5">
                                 <img src={product?.imageUrl} alt="MiniCardImg" className="img-fluid" priority />
@@ -109,7 +161,7 @@ const ShoppingCardModal = ({ shoppingShow, handleShoppingClose,product }: any) =
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
 
                     {/* <div className="p-20 border-top">
                         <div className="row">
@@ -240,7 +292,7 @@ const ShoppingCardModal = ({ shoppingShow, handleShoppingClose,product }: any) =
                 </div>
 
             </Offcanvas>
-            <AddToCardModal cardShow={cardShow} handleAddToCardModalClose={handleAddToCardModalClose} />
+            <AddToCardModal  product={product} cardShow={cardShow} handleAddToCardModalClose={handleAddToCardModalClose} />
         </React.Fragment>
     )
 }

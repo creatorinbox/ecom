@@ -15,13 +15,27 @@ import leadFree from '@assets/images/single-product/lead-free.png'
 import resistantToSpills from '@assets/images/single-product/resistant-to-spills.png'
 import recyclable from '@assets/images/single-product/recyclable.png'
 import thumbsticky from '@assets/images/single-product/layout-02/thumb-sticky.jpg'
+
 interface ProductImage {
   url: string;
 }
-interface tags{
-  name:string;
+interface TagRelation {
+  tag: { name: string };
 }
-type Product = {
+interface CategoryRelation {
+  category: { name: string };
+}
+interface AttributeValue {
+  value: string;
+  attribute: {
+    name: string;
+  };
+}
+interface ProductAttribute {
+  attributeValue: AttributeValue;
+}
+
+interface Product {
   id: number;
   name: string;
   imageUrl: string;
@@ -30,21 +44,33 @@ type Product = {
   salePrice: number;
   badge?: string | null;
   images?: ProductImage[];
-  sku:string;
-  tags: tags[];
-  shortDescription:string;
-  description:string;
-  weightKg:string;
-   lengthCm  :         string;
-  widthCm    :      string;
-  heightCm    :       string;
-};
-const ProductDetailLayout01Tab = ({ product }:any) => {
+  sku: string;
+  tags: TagRelation[];
+  categories: CategoryRelation[];
+  shortDescription: string;
+  description: string;
+  weightKg: string;
+  lengthCm: string;
+  widthCm: string;
+  heightCm: string;
+  attributes?: ProductAttribute[];
+}
+const ProductDetailLayout01Tab = ({ product }:Product) => {
 
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const [activeKey, setActiveKey] = useState('Description');
+    const colorOptions = product?.attributes
+  ?.filter(attr => attr.attributeValue?.attribute?.name?.toLowerCase() === "color")
+  ?.map(attr => attr.attributeValue.value) ?? [];
+
+const sizeOptions = product?.attributes
+  ?.filter(attr => attr.attributeValue?.attribute?.name?.toLowerCase() === "size")
+  ?.map(attr => attr.attributeValue.value) ?? [];
+
+const categoryNames = product?.categories?.map(c => c.category.name) ?? [];
+const tagNames = product?.tags?.map(t => t.tag.name) ?? [];
 const imagesToShow =
   Array.isArray(product?.images) && product.images.length > 0
     ? product.images.map((img) => img.url)
