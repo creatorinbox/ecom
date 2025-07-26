@@ -1,5 +1,5 @@
 import React from 'react'
-import HomeSection from '@app/main-index/HomeSection'
+//import HomeSection from '@app/main-index/HomeSection'
 import CatSection from '@app/(home)/home-header-01/CatSection'
 import TrendingCard from '@src/commonsections/TrendingCard'
 import LookBookCard from '@src/commonsections/LookBookCard'
@@ -21,7 +21,7 @@ const HomeHeader06 = () => {
             <LayoutHeader6 />
 
             {/* main slide */}
-            <HomeSection />
+            {/* <HomeSection /> */}
 
             {/* cat-section */}
             <CatSection />

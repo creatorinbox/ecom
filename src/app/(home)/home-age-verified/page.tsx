@@ -12,8 +12,8 @@ import TopBanner from '@src/components/Headers/TopBanner'
 import Header from '@src/components/Headers/Header'
 import PopupPage from '@src/components/Popup'
 import HeadTitle from '@src/commonsections/HeadTitle'
-import HomeSection from '@src/app/main-index/HomeSection'
-import CatSection from '@src/app/main-index/CatSection'
+//import HomeSection from '@src/app/main-index/HomeSection'
+//import CatSection from '@src/app/main-index/CatSection'
 
 const HomeAgeVerified = () => {
     return (
@@ -24,10 +24,10 @@ const HomeAgeVerified = () => {
             <Header />
 
             {/* main slide */}
-            <HomeSection />
+            {/* <HomeSection /> */}
 
             {/* cat-section */}
-            <CatSection />
+            {/* <CatSection /> */}
 
             {/* trending - card */}
             <TrendingCard />
