@@ -307,116 +307,139 @@
 //   .catch((e) => console.error("❌ Seed error:", e))
 //   .finally(() => prisma.$disconnect());
 const { PrismaClient } = require('@prisma/client');
- const XLSX = require('xlsx');
- const path = require('path');
-
-// const prisma = new PrismaClient();
-//import { PrismaClient } from "@prisma/client";
-//import XLSX from "xlsx";
-//import path from "path";
+const XLSX = require('xlsx');
+const path = require('path');
 
 const prisma = new PrismaClient();
 
-// ✅ Define the expected shape of each Excel row
-type ProductRow = { [key: string]: string };
+// ✅ Type utility
+function parseAttributeValues(input: unknown): string[] {
+  if (typeof input === 'string') {
+    return input.split(',').map(v => (typeof v === 'string' ? v.trim() : String(v || '').trim())).filter(Boolean);
+  }
+  if (typeof input === 'number') {
+    return [String(input).trim()];
+  }
+  return [];
+}
 
 async function main() {
   // 🧬 Load Excel file
-  const workbook = XLSX.readFile(path.resolve(__dirname, "../../ecom/public/Final-product-export-15-7-2025 (1).xlsx"));
+  const workbook = XLSX.readFile(path.resolve(__dirname, '../../ecom/public/Final-product-export-15-7-2025 (1).xlsx'));
   const sheet = workbook.Sheets[workbook.SheetNames[0]];
-const products = XLSX.utils.sheet_to_json(sheet) as ProductRow[];
-  // ✅ Seed basic categories
+  const products = XLSX.utils.sheet_to_json(sheet) as { [key: string]: any }[];
+
+  // ✅ Seed categories
   await prisma.category.createMany({
     data: [
-      { name: "Health" }, { name: "Smart Devices" }, { name: "Electronics" }, { name: "Audio" },
-      { name: "Cameras" }, { name: "Apple Accessories" }, { name: "Mobile Repair" },
-      { name: "Flex Cables" }, { name: "Display & Screens" }
+      { name: 'Health' }, { name: 'Smart Devices' }, { name: 'Electronics' }, { name: 'Audio' },
+      { name: 'Cameras' }, { name: 'Apple Accessories' }, { name: 'Mobile Repair' },
+      { name: 'Flex Cables' }, { name: 'Display & Screens' }
     ],
     skipDuplicates: true,
   });
 
-  // ✅ Seed basic tags
+  // ✅ Seed tags
   await prisma.tag.createMany({
     data: [
-      { name: "bluetooth" }, { name: "4k" }, { name: "monitor" }, { name: "security" },
-      { name: "wireless" }, { name: "speaker" }, { name: "camera" }, { name: "air-quality" },
-      { name: "drone" }, { name: "Apple" }, { name: "Apple Charger" }, { name: "Charger" },
-      { name: "iPhone" }, { name: "iPhone 11 Pro Max" }, { name: "iPhone Charger" },
-      { name: "Back Glass Replacement" }, { name: "iCare" }, { name: "iPhone Back Glass Repair" },
-      { name: "iPhone Rear Glass Repair" }, { name: "Repair Service" }, { name: "Flex Cable" },
-      { name: "Mi 10T" }, { name: "Power Button" }, { name: "Volume Button" },
-      { name: "Xiaomi" }, { name: "Xiaomi Flex Cable" }, { name: "LCD with Touch Screen" },
-      { name: "Vivo" }, { name: "Vivo LCD with Touch Screen" }, { name: "Vivo V7" },
-      { name: "Vivo V7 Display Replacement" }, { name: "Vivo V7 Touch Screen" }
+      { name: 'bluetooth' }, { name: '4k' }, { name: 'monitor' }, { name: 'security' },
+      { name: 'wireless' }, { name: 'speaker' }, { name: 'camera' }, { name: 'air-quality' },
+      { name: 'drone' }, { name: 'Apple' }, { name: 'Apple Charger' }, { name: 'Charger' },
+      { name: 'iPhone' }, { name: 'iPhone 11 Pro Max' }, { name: 'iPhone Charger' },
+      { name: 'Back Glass Replacement' }, { name: 'iCare' }, { name: 'iPhone Back Glass Repair' },
+      { name: 'iPhone Rear Glass Repair' }, { name: 'Repair Service' }, { name: 'Flex Cable' },
+      { name: 'Mi 10T' }, { name: 'Power Button' }, { name: 'Volume Button' },
+      { name: 'Xiaomi' }, { name: 'Xiaomi Flex Cable' }, { name: 'LCD with Touch Screen' },
+      { name: 'Vivo' }, { name: 'Vivo LCD with Touch Screen' }, { name: 'Vivo V7' },
+      { name: 'Vivo V7 Display Replacement' }, { name: 'Vivo V7 Touch Screen' }
     ],
     skipDuplicates: true,
   });
 
-  // ✅ Loop through each product row
+  // ✅ Seed products
   for (const item of products) {
-    console.log("🧾 Seeding:", item["Name"]);
+    //console.log('🧾 Seeding:', item['Name']);
 
-    // ⛳ Create the product itself
     const product = await prisma.product.create({
       data: {
-        name: item["Name"],
-        sku: item["SKU"],
-        regularPrice: Number(item["Regular price"]) || 250,
-        salePrice: Number(item["Sale price"]) || 180,
-        badge: item["Badge"] || null,
-        imageUrl: item["Images"]?.split(",")[0]?.trim() || "",
-        hoverImage: item["Images"]?.split(",")[1]?.trim() || "",
-        brand: item["Brands"]?.trim() || "Unknown",
-        isFeatured: item["Is featured?"] === "1",
-        isBestSelling: item["Published"] === "1",
+        name: item['Name'],
+        sku: item["SKU"] ? String(item["SKU"]) : null,
+
+        regularPrice: Number(item['Regular price']) || 250,
+        salePrice: Number(item['Sale price']) || 180,
+        badge: item['Badge'] || null,
+        imageUrl: parseAttributeValues(item['Images'])[0] || '',
+        hoverImage: parseAttributeValues(item['Images'])[1] || '',
+        brand: typeof item['Brands'] === 'string' ? item['Brands'].trim() : 'Unknown',
+        isFeatured: item['Is featured?'] === '1',
+        isBestSelling: item['Published'] === '1',
+        description: typeof item['Description'] === 'string' ? item['Description'].trim() : '',
+        shortDescription: typeof item['Short description'] === 'string' ? item['Short description'].trim() : '',
+        visibility: item['Visibility in catalog'] || '',
+        saleStartDate: item["Sale start date"] ? new Date(item["Sale start date"]) : undefined,
+saleEndDate: item["sale price ends"] ? new Date(item["sale price ends"]) : undefined,
+
+        taxStatus: item['Tax status'] || '',
+        taxClass: item[' Tax class'] || '',
+inStock: String(item["In stock?"]).trim() === "1",
+stock: item["Stock"] ? Number(item["Stock"]) : null,
+lowStockAmount: item["Low stock amount"] ? Number(item["Low stock amount"]) : null,
+allowBackorders: item["Allow backorders"]?.toLowerCase() === "true",
+        soldIndividually: item["Sold individually?"] === "true",
+weightKg: item["Weight kg"] ? parseFloat(item["Weight kg"]) : null,
+lengthCm: item["Length (cm)"] ? parseFloat(item["Length (cm)"]) : null,
+
+widthCm: item["Width (cm)"] ? parseFloat(item["Width (cm)"]) : null,
+heightCm: item["Height (cm)"] ? parseFloat(item["Height (cm)"]) : null,
+
+allowReviews: item["Allow customer reviews?"] === "true",
+
         categories: {
-          create: item["Categories"]
-            ?.split(">")
-            .map((name:string) => ({
-              category: {
-                connectOrCreate: {
-                  where: { name: name.trim() },
-                  create: { name: name.trim() },
-                },
+          create: parseAttributeValues(item['Categories']?.replaceAll('>', ',')).map(name => ({
+            category: {
+              connectOrCreate: {
+                where: { name },
+                create: { name },
               },
-            })) ?? [],
+            },
+          })),
         },
+
         tags: {
-          create: item["Tags"]
-            ?.split(",")
-            .map((name:string) => ({
-              tag: {
-                connectOrCreate: {
-                  where: { name: name.trim() },
-                  create: { name: name.trim() },
-                },
+          create: parseAttributeValues(item['Tags']).map(name => ({
+            tag: {
+              connectOrCreate: {
+                where: { name },
+                create: { name },
               },
-            })) ?? [],
+            },
+          })),
         },
-        images: item["Images"]
+
+        images: item['Images']
           ? {
-              create: item["Images"]
-                .split(",")
-                .map((url:string) => ({ url: url.trim() })),
+              create: parseAttributeValues(item['Images']).map(url => ({ url })),
             }
           : undefined,
       },
     });
 
-    // 🧩 Attributes loop — up to 3 attributes
+    // 🧩 Seed product attributes
     const attributeMap = [
-      { nameKey: "Attribute 1 name", valueKey: "Attribute 1 value(s)" },
-      { nameKey: "Attribute 2 name", valueKey: "Attribute 2 value(s)" },
-      { nameKey: "Attribute 3 name", valueKey: "Attribute 3 value(s)" },
+      { nameKey: 'Attribute 1 name', valueKey: 'Attribute 1 value(s)' },
+      { nameKey: 'Attribute 2 name', valueKey: 'Attribute 2 value(s)' },
+      { nameKey: 'Attribute 3 name', valueKey: 'Attribute 3 value(s)' },
     ];
 
     for (const attr of attributeMap) {
-      const attrName = item[attr.nameKey]?.trim();
-      const attrValues = item[attr.valueKey]?.split(",").map((v: string) => v.trim()).filter(Boolean);
+      const attrName = typeof item[attr.nameKey] === 'string'
+        ? item[attr.nameKey].trim()
+        : String(item[attr.nameKey] || '').trim();
+
+      const attrValues = parseAttributeValues(item[attr.valueKey]);
 
       if (!attrName || !attrValues.length) continue;
 
-      // Create or find Attribute
       const attribute = await prisma.attribute.upsert({
         where: { name: attrName },
         update: {},
@@ -424,7 +447,6 @@ const products = XLSX.utils.sheet_to_json(sheet) as ProductRow[];
       });
 
       for (const value of attrValues) {
-        // Check if value exists
         let attributeValue = await prisma.attributeValue.findFirst({
           where: {
             value,
@@ -433,7 +455,6 @@ const products = XLSX.utils.sheet_to_json(sheet) as ProductRow[];
         });
 
         if (!attributeValue) {
-          // Create if not found
           attributeValue = await prisma.attributeValue.create({
             data: {
               value,
@@ -442,7 +463,6 @@ const products = XLSX.utils.sheet_to_json(sheet) as ProductRow[];
           });
         }
 
-        // Link to product
         await prisma.productAttribute.create({
           data: {
             productId: product.id,
@@ -453,12 +473,12 @@ const products = XLSX.utils.sheet_to_json(sheet) as ProductRow[];
     }
   }
 
-  console.log("✅ All products and attributes seeded successfully!");
+  console.log('✅ All products and attributes seeded successfully!');
 }
 
 main()
   .catch((e) => {
-    console.error("❌ Seed error:", e);
+    console.error('❌ Seed error:', e);
     process.exit(1);
   })
   .finally(() => prisma.$disconnect());

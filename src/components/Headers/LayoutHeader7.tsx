@@ -396,7 +396,7 @@ const LayoutHeader7 = () => {
                     </div>
                 </div>
             </nav>
-            <ShoppingCardModal shoppingShow={shoppingShow} handleShoppingClose={handleShoppingClose} />
+            {/* <ShoppingCardModal shoppingShow={shoppingShow} handleShoppingClose={handleShoppingClose} /> */}
             <MobileHeaderSearchModel show={show} handleClose={handleClose} />
             <SearchModal show={searchShow} handleClose={handleSearchClose} />
         </React.Fragment>

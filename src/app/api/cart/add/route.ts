@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const cartItem = await prisma.CartItem.create({
+    const cartItem = await prisma.cartItem.create({
       data: {
         productId: Number(productId),
         quantity: Number(quantity),

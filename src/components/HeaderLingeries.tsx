@@ -414,7 +414,7 @@ const HeaderLingeries = () => {
             <div className="backdrop-shadow d-none"></div>
             <SearchModal show={searchShow} handleClose={handleClose} />
             <LoginModal loginShow={loginShow} handleLoginClose={handleLoginClose} />
-            <ShoppingCardModal shoppingShow={shoppingShow} handleShoppingClose={handleShoppingClose} />
+            {/* <ShoppingCardModal shoppingShow={shoppingShow} handleShoppingClose={handleShoppingClose} /> */}
 
             <MobileHeader headerShow={headerShow}
                 handleHeaderClose={handleHeaderClose}

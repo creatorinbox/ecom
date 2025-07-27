@@ -388,8 +388,8 @@ const FilterTab = () => {
                     </div>
                 </div>
             </Container>
-            <ProductModal show={show} handleClose={handleShow} />
-            <AddToCardModal cardShow={cardShow} handleAddToCardModalClose={handleAddToCardModalClose} />
+            {/* <ProductModal show={show} handleClose={handleShow} /> */}
+            {/* <AddToCardModal cardShow={cardShow} handleAddToCardModalClose={handleAddToCardModalClose} /> */}
         </React.Fragment>
     )
 }

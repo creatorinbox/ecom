@@ -5,7 +5,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from "swiper/modules";
 import LoginModal from '@src/components/Headers/LoginModal';
 import SearchModal from '@src/components/Headers/SearchModal';
-import ShoppingCardModal from '@src/commonsections/ShoppingCardModal';
+// import ShoppingCardModal from '@src/commonsections/ShoppingCardModal';
 import MainModel from '@src/commonsections/MainModel';
 
 import Image from 'next/image'
@@ -132,8 +132,8 @@ const HeaderCard = ({ product }: String | any) => {
                     )}
                 </div>
             </div>
-            <ProductModal show={show} handleClose={handleClose} />
-            <AddToCardModal cardShow={cardShow} handleAddToCardModalClose={handleAddToCardModalClose} />
+            {/* <ProductModal show={show} handleClose={handleClose} />
+            <AddToCardModal cardShow={cardShow} handleAddToCardModalClose={handleAddToCardModalClose} /> */}
         </>
     )
 }
@@ -579,7 +579,7 @@ const HeaderBag = () => {
             <div className="backdrop-shadow d-none"></div>
             <SearchModal show={searchShow} handleClose={handleClose} />
             <LoginModal loginShow={loginShow} handleLoginClose={handleLoginClose} />
-            <ShoppingCardModal shoppingShow={shoppingShow} handleShoppingClose={handleShoppingClose} />
+            {/* <ShoppingCardModal shoppingShow={shoppingShow} handleShoppingClose={handleShoppingClose} /> */}
 
              <MobileHeader headerShow={headerShow}
                 handleHeaderClose={handleHeaderClose}

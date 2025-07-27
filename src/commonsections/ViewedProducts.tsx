@@ -695,9 +695,9 @@ const ViewedProduct = () => {
                 </Col>
 
             </Row>
-
+{/* 
             <ProductModal show={show} handleClose={handleClose} />
-            <AddToCardModal cardShow={cardShow} handleAddToCardModalClose={handleAddToCardModalClose} />
+            <AddToCardModal cardShow={cardShow} handleAddToCardModalClose={handleAddToCardModalClose} /> */}
         </React.Fragment>
     )
 }

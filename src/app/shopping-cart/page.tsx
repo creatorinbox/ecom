@@ -40,7 +40,7 @@ const ShoppingCart = () => {
                     <h3 className="py-4 text-center">
                         Recently viewed products
                     </h3>
-                    <ViewedProduct />
+                    {/* <ViewedProduct /> */}
                 </div>
 
             </div>

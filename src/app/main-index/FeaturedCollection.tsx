@@ -6,15 +6,46 @@ import Link from "next/link";
 import ProductModal from "@src/commonsections/ProductModal";
 import AddToCardModal from "@src/commonsections/AddToCardModal";
 
-type Product = {
+interface ProductImage {
+  url: string;
+}
+interface TagRelation {
+  tag: { name: string };
+}
+interface CategoryRelation {
+  category: { name: string };
+}
+interface AttributeValue {
+  value: string;
+  attribute: {
+    name: string;
+  };
+}
+interface ProductAttribute {
+  attributeValue: AttributeValue;
+}
+
+interface Product {
   id: number;
   name: string;
   imageUrl: string;
   hoverImage: string;
-  regularPrice?: number;
+  regularPrice?: number | null;
   salePrice: number;
-  badge?: string;
-};
+  badge?: string | null;
+  images?: ProductImage[];
+  sku: string;
+  tags: TagRelation[];
+  categories: CategoryRelation[];
+  shortDescription: string;
+  description: string;
+  weightKg: string;
+  lengthCm: string;
+  widthCm: string;
+  heightCm: string;
+  attributes?: ProductAttribute[];
+}
+
 
 const FeaturedCard = ({ item }: { item: Product }) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -70,9 +101,10 @@ const FeaturedCard = ({ item }: { item: Product }) => {
           </p>
         </div>
       </div>
-      <ProductModal show={show} handleClose={() => setShow(false)} />
+      <ProductModal show={show} handleClose={() => setShow(false)}   product={item}/>
       <AddToCardModal
         cardShow={cardShow}
+        product={item}
         handleAddToCardModalClose={() => setCardShow(false)}
       />
     </div>

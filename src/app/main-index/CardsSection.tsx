@@ -1,11 +1,11 @@
 "use client";
 import React, { useState } from 'react'
-import ProductModal from '@src/commonsections/ProductModal'
-import AddToCardModal from '@src/commonsections/AddToCardModal'
+//import ProductModal from '@src/commonsections/ProductModal'
+//import AddToCardModal from '@src/commonsections/AddToCardModal'
 import Image from 'next/image'
 import Link from 'next/link'
-import countdown from "@assets/images/home-digital/banner-countdown-left.jpg"
-import pr17 from "@assets/images/home-digital/pr-17.jpg"
+import countdown from "@assets/images/home-digital/banner-countdown-left-1.jpg"
+import pr17 from "@assets/images/home-digital/pr-19.jpg"
 import countdownright from "@assets/images/home-digital/banner-countdown-right.jpg"
 
 
@@ -115,8 +115,8 @@ const CardsSection = () => {
                     </div>
                 </div>
             </section>
-            <ProductModal show={show} handleClose={handleClose} />
-            <AddToCardModal cardShow={cardShow} handleAddToCardModalClose={handleAddToCardModalClose} />
+            {/* <ProductModal show={show} handleClose={handleClose} /> */}
+            {/* <AddToCardModal cardShow={cardShow} handleAddToCardModalClose={handleAddToCardModalClose} /> */}
         </React.Fragment>
     )
 }

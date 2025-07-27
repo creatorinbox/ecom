@@ -65,8 +65,18 @@ const BottomProduct = ({ img, colorSize, colorSize2, name, price, del, handleSho
                     <Row className="justify-content-between align-items-center py-2">
                         <div className="col-auto">
                             <div className="d-flex align-items-center">
-                                <div>
-                                    <Image alt="ImgImg" src={img} style={{ maxWidth: "65px", maxHeight: "75px", width: "auto", verticalAlign: "middle" }} />
+                                <div><Image
+  alt="ImgImg"
+  src={img}
+  width={65}
+  height={75}
+  style={{
+    width: "auto",
+    verticalAlign: "middle",
+  }}
+/>
+
+                                    {/* <Image alt="ImgImg" src={img} style={{ maxWidth: "65px", maxHeight: "75px", width: "auto", verticalAlign: "middle" }} /> */}
                                 </div>
                                 <div className="ms-2">
                                     <h6 className="mb-1">Men pants</h6>

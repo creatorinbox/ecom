@@ -80,7 +80,7 @@ const LayoutHeader = () => {
                 loginShow={loginShow}
                 handleLoginClose={handleLoginClose}
                 handleLoginShow={handleLoginShow} />
-            <ShoppingCardModal shoppingShow={shoppingShow} handleShoppingClose={handleShoppingClose} />
+            {/* <ShoppingCardModal shoppingShow={shoppingShow} handleShoppingClose={handleShoppingClose} /> */}
             <MobileHeaderSearchModel show={show} handleClose={handleClose} />
         </React.Fragment>
     )

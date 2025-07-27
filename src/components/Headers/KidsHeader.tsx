@@ -443,7 +443,7 @@ const KidsHeader = () => {
                 </nav>
 
             </div>
-            <ShoppingCardModal shoppingShow={shoppingShow} handleShoppingClose={handleShoppingClose} />
+            {/* <ShoppingCardModal shoppingShow={shoppingShow} handleShoppingClose={handleShoppingClose} /> */}
             <SearchModal show={searchShow} handleClose={handleClose} />
             <LoginModal loginShow={loginShow} handleLoginClose={handleLoginClose} />
             <MobileHeader headerShow={headerShow}

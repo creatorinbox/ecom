@@ -8,14 +8,50 @@ import ProductModal from "./ProductModal";
 import AddToCardModal from "./AddToCardModal";
 
 import "flickity/css/flickity.css";
+interface ProductImage {
+  url: string;
+}
+interface TagRelation {
+  tag: { name: string };
+}
+interface CategoryRelation {
+  category: { name: string };
+}
+interface AttributeValue {
+  value: string;
+  attribute: {
+    name: string;
+  };
+}
+interface ProductAttribute {
+  attributeValue: AttributeValue;
+}
 
 interface Product {
   id: number;
   name: string;
   imageUrl: string;
-  salePrice: number;
+  hoverImage: string;
   regularPrice?: number | null;
+  salePrice: number;
+  badge?: string | null;
+  images?: ProductImage[];
+  sku: string;
+  tags: TagRelation[];
+  categories: CategoryRelation[];
+  shortDescription: string;
+  description: string;
+  weightKg: string;
+  lengthCm: string;
+  widthCm: string;
+  heightCm: string;
+  attributes?: ProductAttribute[];
 }
+type Props = {
+  cardShow: boolean;
+  handleAddToCardModalClose: () => void;
+  product: Product | null; // 👈 allow null
+};
 
 const LikeProducts = () => {
   const flickityRef = useRef<Flickity | null>(null);
@@ -103,11 +139,11 @@ const LikeProducts = () => {
         show={showQuickView}
         handleClose={() => setShowQuickView(false)}
       />
-      <AddToCardModal
+      {selectedProduct && (<AddToCardModal
         product={selectedProduct}
         cardShow={showQuickShop}
         handleAddToCardModalClose={() => setShowQuickShop(false)}
-      />
+      />)}
     </React.Fragment>
   );
 };

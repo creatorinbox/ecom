@@ -4,9 +4,6 @@ import React, { useEffect, useState } from 'react';
 import { Offcanvas, Button, Form } from 'react-bootstrap';
 import Image from 'next/image';
 import Link from 'next/link';
-import miniCard from '@assets/images/mini-cart/mini-cart-01.jpg'
-import miniCard2 from '@assets/images/mini-cart/mini-cart-02.jpg'
-import miniCard3 from '@assets/images/mini-cart/mini-cart-03.jpg'
 import trust from '@assets/images/trust_img2.png'
 import AddToCardModal from '@src/commonsections/AddToCardModal';
 
@@ -14,23 +11,67 @@ interface ProductImage {
   url: string;
 }
 
-interface Product {
+interface CategoryRelation {
+  category: {
+    name: string;
+  };
+}
+
+interface TagRelation {
+  tag: {
+    name: string;
+  };
+}
+
+interface AttributeValueRelation {
+  value: string;
+  attribute: {
+    name: string;
+  };
+}
+
+interface ProductAttribute {
+  attributeValue: AttributeValueRelation;
+}
+
+type Product = {
   id: number;
   name: string;
+  imageUrl: string;
+  hoverImage: string;
   regularPrice?: number | null;
   salePrice: number;
   badge?: string | null;
-  imageUrl: string;
-  hoverImage: string;
-  description?: string;
   images?: ProductImage[];
-}
-const ShoppingCardModal = ({ shoppingShow, handleShoppingClose,product }: any) => {
+  sku: string;
+  shortDescription: string;
+  description: string;
+  weightKg: string;
+  lengthCm: string;
+  widthCm: string;
+  heightCm: string;
+  categories: CategoryRelation[];
+  tags: TagRelation[];
+  attributes?: ProductAttribute[];
+};
+type Props = {
+  shoppingShow: boolean;
+  handleShoppingClose: () => void;
+  product: Product | null; // 👈 allow null
+};
+const ShoppingCardModal = ({ shoppingShow, handleShoppingClose,product }: Props) => {
 const [cartItems, setCartItems] = useState<any[]>([]); // or create a proper CartItem type
     const [quantity, setQuantity] = useState(1);
     const [quantity2, setQuantity2] = useState(1);
     const [quantity3, setQuantity3] = useState(1);
     const [cardShow, setCardShow] = useState(false);
+    const [editingItem, setEditingItem] = useState<Product | null>(null);
+
+const handleEdit = (item: Product) => {
+  setEditingItem(item);
+  handleAddToCardModalShow();
+};
+
 useEffect(() => {
   const fetchCart = async () => {
     try {
@@ -292,7 +333,8 @@ const handleDelete = async (id: number) => {
                 </div>
 
             </Offcanvas>
-            <AddToCardModal  product={product} cardShow={cardShow} handleAddToCardModalClose={handleAddToCardModalClose} />
+
+<AddToCardModal cardShow={cardShow} handleAddToCardModalClose={handleAddToCardModalClose} product={product} />
         </React.Fragment>
     )
 }

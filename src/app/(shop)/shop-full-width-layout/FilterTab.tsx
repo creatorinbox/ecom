@@ -1,16 +1,55 @@
 "use client";
 import React, { useState, useEffect } from 'react'
 import { Col, Dropdown, Row } from 'react-bootstrap'
-import { ProductData } from '@src/common/shop/ProductData';
+//import { products } from '@src/common/shop/products';
 import { brandData, priceData, sizeData, vendorData } from '@src/common/shop/filterData'
 import AddToCardModal from '@src/commonsections/AddToCardModal';
 import ProductModal from '@src/commonsections/ProductModal';
 import Image from 'next/image';
 import Link from 'next/link';
+interface ProductImage {
+  url: string;
+}
+interface TagRelation {
+  tag: { name: string };
+}
+interface CategoryRelation {
+  category: { name: string };
+}
+interface AttributeValue {
+  value: string;
+  attribute: {
+    name: string;
+  };
+}
+interface ProductAttribute {
+  attributeValue: AttributeValue;
+}
 
+interface Product {
+  id: number;
+  name: string;
+  imageUrl: string;
+  hoverImage: string;
+  regularPrice?: number | null;
+  salePrice: number;
+  badge?: string | null;
+  images?: ProductImage[];
+  sku: string;
+  tags: TagRelation[];
+  categories: CategoryRelation[];
+  shortDescription: string;
+  description: string;
+  weightKg: string;
+  lengthCm: string;
+  widthCm: string;
+  heightCm: string;
+  attributes?: ProductAttribute[];
+}
 const ProductCard = ({ product, handleShow, handleAddToCardModalShow }: any) => {
     const [isHovered, setIsHovered] = useState(false);
     const [imageUrl, setImageUrl] = useState(product.imageUrl);
+
 
     return (
         <>
@@ -31,12 +70,18 @@ const ProductCard = ({ product, handleShow, handleAddToCardModalShow }: any) => 
                                 src={isHovered ? product.hoverImageUrl : imageUrl}
                                 alt="image"
                                 className="img-fluid w-100"
+                                width={4}
+  height={3}
+  layout="responsive"
                             />
                             :
                             <Image
                                 src={imageUrl}
                                 alt="ImageUrlImg"
                                 className="img-fluid w-100"
+                                width={4}
+  height={3}
+  layout="responsive"
                             />
                     }
                     <Link href="#" className="d-lg-none position-absolute" style={{ zIndex: 1, top: 10, left: 10 }} data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add to Wishlist">
@@ -141,8 +186,9 @@ const FilterTab = () => {
     const [show, setShow] = useState(false);
     const [cardShow, setCardShow] = useState(false);
     const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-
+  //  const handleShow = () => setShow(true);
+const [products, setProducts] = useState<Product[]>([]);
+const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
     useEffect(() => {
         const handleResize = () => {
             if (window.innerWidth <= 768) {
@@ -151,14 +197,36 @@ const FilterTab = () => {
                 setDisplay(3); // Default columns for larger screens
             }
         };
-        window.addEventListener('resize', handleResize);
+ const fetchProducts = async () => {
+    try {
+      const res = await fetch("/api/products"); // Adjust endpoint as needed
+      const data = await res.json();
+      setProducts(data);
+    } catch (err) {
+      console.error("Failed to fetch products", err);
+    }
+      };  
+        fetchProducts();
+
+      window.addEventListener('resize', handleResize);
         // Set initial value based on the current window size
         handleResize();
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    const handleAddToCardModalShow = () => setCardShow(true);
+
+  //  const handleAddToCardModalShow = () => setCardShow(true);
     const handleAddToCardModalClose = () => setCardShow(false);
+
+const handleShow = (product: Product) => {
+  setSelectedProduct(product);
+  setShow(true);
+};
+
+const handleAddToCardModalShow = (product: Product) => {
+  setSelectedProduct(product);
+  setCardShow(true);
+};
 
     const handleOpen = () => {
         setOpen(!open)
@@ -348,9 +416,10 @@ const FilterTab = () => {
             <div className="tab-content my-3 my-md-4" id="pills-tabContent">
                 <div className={`tab-pane fade ${display === 6 ? "active show" : ""}`} id="best-pan1" role="tabpanel" aria-labelledby="best-pan1-tab" tabIndex={0}>
                     <Row className="g-lg-4 g-3">
-                        {ProductData.map(product => (
+                        {products.map(product => (
                             <div className='col-12' key={product.id}>
-                                <ProductCard key={product.id} product={product} handleShow={handleShow} handleAddToCardModalShow={handleAddToCardModalShow} />
+                                <ProductCard key={product.id} product={product}  handleShow={() => handleShow(product)}
+        handleAddToCardModalShow={() => handleAddToCardModalShow(product)} />
                             </div>
                         ))}
 
@@ -361,9 +430,10 @@ const FilterTab = () => {
             <div className="tab-content my-3 my-md-4" id="pills-tabContent">
                 <div className={`tab-pane fade ${display === 1 ? "active show" : ""}`} id="best-pan1" role="tabpanel" aria-labelledby="best-pan1-tab" tabIndex={0}>
                     <Row className="g-lg-4 g-3">
-                        {ProductData.map(product => (
+                        {products.map(product => (
                             <div className='col-6' key={product.id}>
-                                <ProductCard key={product.id} product={product} handleShow={handleShow} handleAddToCardModalShow={handleAddToCardModalShow} />
+                                <ProductCard key={product.id} product={product}  handleShow={() => handleShow(product)}
+        handleAddToCardModalShow={() => handleAddToCardModalShow(product)} />
                             </div>
                         ))}
 
@@ -374,9 +444,10 @@ const FilterTab = () => {
             <div className="tab-content my-3 my-md-4" id="pills-tabContent">
                 <div className={`tab-pane fade ${display === 2 ? "active show" : ""}`} id="best-pan1" role="tabpanel" aria-labelledby="best-pan1-tab" tabIndex={0}>
                     <Row className="g-lg-4 g-3">
-                        {ProductData.map(product => (
+                        {products.map(product => (
                             <div className='col-4' key={product.id}>
-                                <ProductCard key={product.id} product={product} handleShow={handleShow} handleAddToCardModalShow={handleAddToCardModalShow} />
+                                <ProductCard key={product.id} product={product}  handleShow={() => handleShow(product)}
+        handleAddToCardModalShow={() => handleAddToCardModalShow(product)} />
                             </div>
                         ))}
 
@@ -387,9 +458,10 @@ const FilterTab = () => {
             <div className="tab-content my-3 my-md-4" id="pills-tabContent">
                 <div className={`tab-pane fade ${display === 3 ? "active show" : ""}`} id="best-pan1" role="tabpanel" aria-labelledby="best-pan1-tab" tabIndex={0}>
                     <Row className="g-lg-4 g-3">
-                        {ProductData.map(product => (
+                        {products.map(product => (
                             <div className='col-3' key={product.id}>
-                                <ProductCard key={product.id} product={product} handleShow={handleShow} handleAddToCardModalShow={handleAddToCardModalShow} />
+                                <ProductCard key={product.id} product={product}  handleShow={() => handleShow(product)}
+        handleAddToCardModalShow={() => handleAddToCardModalShow(product)} />
                             </div>
                         ))}
 
@@ -400,9 +472,10 @@ const FilterTab = () => {
             <div className="tab-content my-3 my-md-4" id="pills-tabContent">
                 <div className={`tab-pane fade ${display === 4 ? "active show" : ""}`} id="best-pan1" role="tabpanel" aria-labelledby="best-pan1-tab" tabIndex={0}>
                     <Row className="g-3 row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5">
-                        {ProductData.map(product => (
+                        {products.map(product => (
                             <div className='col' key={product.id}>
-                                <ProductCard key={product.id} product={product} handleShow={handleShow} handleAddToCardModalShow={handleAddToCardModalShow} />
+                                <ProductCard key={product.id} product={product}  handleShow={() => handleShow(product)}
+        handleAddToCardModalShow={() => handleAddToCardModalShow(product)} />
                             </div>
                         ))}
 
@@ -413,17 +486,24 @@ const FilterTab = () => {
             <div className="tab-content my-3 my-md-4" id="pills-tabContent">
                 <div className={`tab-pane fade ${display === 5 ? "active show" : ""}`} id="best-pan1" role="tabpanel" aria-labelledby="best-pan1-tab" tabIndex={0}>
                     <Row className="g-lg-4 g-3">
-                        {ProductData.map(product => (
+                        {products.map(product => (
                             <div className='col-2' key={product.id}>
-                                <ProductCard key={product.id} product={product} handleShow={handleShow} handleAddToCardModalShow={handleAddToCardModalShow} />
+                                <ProductCard key={product.id} product={product}  handleShow={() => handleShow(product)}
+        handleAddToCardModalShow={() => handleAddToCardModalShow(product)} />
                             </div>
                         ))}
                     </Row>
                 </div>
             </div>
-
-            <ProductModal show={show} handleClose={handleClose} />
-            <AddToCardModal cardShow={cardShow} handleAddToCardModalClose={handleAddToCardModalClose} />
+{selectedProduct && (
+            <ProductModal show={show} handleClose={handleClose}  product={selectedProduct} />)}
+           {selectedProduct && (
+  <AddToCardModal
+    cardShow={cardShow}
+    handleAddToCardModalClose={handleAddToCardModalClose}
+    product={selectedProduct}
+  />
+)}
         </React.Fragment >
     )
 }

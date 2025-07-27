@@ -107,7 +107,7 @@ const LayoutHeader6 = () => {
                 loginShow={loginShow}
                 handleLoginClose={handleLoginClose}
                 handleLoginShow={handleLoginShow} />
-            <ShoppingCardModal shoppingShow={shoppingShow} handleShoppingClose={handleShoppingClose} />
+            {/* <ShoppingCardModal shoppingShow={shoppingShow} handleShoppingClose={handleShoppingClose} /> */}
 
         </React.Fragment>
     )

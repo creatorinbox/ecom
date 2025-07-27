@@ -48,7 +48,7 @@ const ResponsiveFooter = () => {
                     <h6 className="fw-medium fs-12 pt-2 mb-0">Search</h6>
                 </Link>
             </div>
-            <ShoppingCardModal shoppingShow={shoppingShow} handleShoppingClose={handleShoppingClose} />
+            {/* <ShoppingCardModal shoppingShow={shoppingShow} handleShoppingClose={handleShoppingClose} /> */}
             <SearchModal show={searchShow} handleClose={handleClose} />
             <LoginModal loginShow={loginShow} handleLoginClose={handleLoginClose} />
         </React.Fragment>

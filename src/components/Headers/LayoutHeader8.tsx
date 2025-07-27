@@ -617,7 +617,7 @@ const LayoutHeader8 = () => {
                 </nav>
             </div >
             <SearchModal show={searchShow} handleClose={handleClose} />
-            <ShoppingCardModal shoppingShow={shoppingShow} handleShoppingClose={handleShoppingClose} />
+            {/* <ShoppingCardModal shoppingShow={shoppingShow} handleShoppingClose={handleShoppingClose} /> */}
             <MobileHeader headerShow={headerShow}
                 handleHeaderClose={handleHeaderClose}
                 loginShow={loginShow}

@@ -58,7 +58,7 @@ interface Product {
   attributes?: ProductAttribute[];
 }
 type Props = {
-  product: Product;
+  product: Product | null;
 };
 
 const ViewedProduct = ({ product }:Props) => {
@@ -763,8 +763,7 @@ const ViewedProduct = ({ product }:Props) => {
                 </Col>
 
             </Row>
-
-            <ProductModal show={show} handleClose={handleClose} />
+            <ProductModal show={show} handleClose={handleClose} product={product}/>
             <AddToCardModal cardShow={cardShow} handleAddToCardModalClose={handleAddToCardModalClose} product={product} />
         </React.Fragment>
     )

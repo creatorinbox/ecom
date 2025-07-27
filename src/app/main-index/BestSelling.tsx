@@ -8,7 +8,23 @@ import Link from "next/link";
 interface ProductImage {
   url: string;
 }
-type Product = {
+interface TagRelation {
+  tag: { name: string };
+}
+interface CategoryRelation {
+  category: { name: string };
+}
+interface AttributeValue {
+  value: string;
+  attribute: {
+    name: string;
+  };
+}
+interface ProductAttribute {
+  attributeValue: AttributeValue;
+}
+
+interface Product {
   id: number;
   name: string;
   imageUrl: string;
@@ -17,7 +33,17 @@ type Product = {
   salePrice: number;
   badge?: string | null;
   images?: ProductImage[];
-};
+  sku: string;
+  tags: TagRelation[];
+  categories: CategoryRelation[];
+  shortDescription: string;
+  description: string;
+  weightKg: string;
+  lengthCm: string;
+  widthCm: string;
+  heightCm: string;
+  attributes?: ProductAttribute[];
+}
 
 const BestSelling = () => {
   const [products, setProducts] = useState<Product[]>([]);

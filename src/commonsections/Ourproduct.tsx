@@ -1172,8 +1172,8 @@ const Ourproduct = () => {
                 </div>
             </section>
 
-            <ProductModal show={show} handleClose={handleClose} />
-            <AddToCardModal cardShow={cardShow} handleAddToCardModalClose={handleAddToCardModalClose} />
+            {/* <ProductModal show={show} handleClose={handleClose} /> */}
+            {/* <AddToCardModal cardShow={cardShow} handleAddToCardModalClose={handleAddToCardModalClose} /> */}
         </React.Fragment>
     )
 }

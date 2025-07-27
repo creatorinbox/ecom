@@ -1,9 +1,8 @@
-// File: /pages/api/products/liked.ts
-
-import { NextApiRequest, NextApiResponse } from 'next';
+// File: /app/api/products/liked/route.ts
+import { NextResponse } from 'next/server';
 import { prisma } from "@src/lib/prisma";
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export async function GET() {
   try {
     const likedProducts = await prisma.product.findMany({
       where: { liked: true },
@@ -16,9 +15,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       },
     });
 
-    res.status(200).json(likedProducts);
+    return NextResponse.json(likedProducts);
   } catch (error) {
     console.error('Error fetching liked products:', error);
-    res.status(500).json({ message: 'Server error' });
+    return NextResponse.json({ message: 'Server error' }, { status: 500 });
   }
 }

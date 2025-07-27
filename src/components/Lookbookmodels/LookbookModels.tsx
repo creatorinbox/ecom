@@ -75,8 +75,8 @@ const PinModal1 = ({ show, handleClose }: any) => {
                     </div>
                 </Modal.Body>
             </Modal>
-            <ProductModal show={showw} handleClose={handleModelClose} />
-            <AddToCardModal cardShow={cardShow} handleAddToCardModalClose={handleAddToCardModalClose} />
+            {/* <ProductModal show={showw} handleClose={handleModelClose} />
+            <AddToCardModal cardShow={cardShow} handleAddToCardModalClose={handleAddToCardModalClose} /> */}
         </>
     );
 };
@@ -136,8 +136,8 @@ const PinModal2 = ({ show, handleClose }: any) => {
                     </div>
                 </Modal.Body>
             </Modal>
-            <ProductModal show={showw} handleClose={handleModelClose} />
-            <AddToCardModal cardShow={cardShow} handleAddToCardModalClose={handleAddToCardModalClose} />
+            {/* <ProductModal show={showw} handleClose={handleModelClose} />
+            <AddToCardModal cardShow={cardShow} handleAddToCardModalClose={handleAddToCardModalClose} /> */}
         </>
     );
 };
@@ -197,8 +197,8 @@ const PinModal3 = ({ show, handleClose }: any) => {
                     </div>
                 </Modal.Body>
             </Modal>
-            <ProductModal show={showw} handleClose={handleModelClose} />
-            <AddToCardModal cardShow={cardShow} handleAddToCardModalClose={handleAddToCardModalClose} />
+            {/* <ProductModal show={showw} handleClose={handleModelClose} />
+            <AddToCardModal cardShow={cardShow} handleAddToCardModalClose={handleAddToCardModalClose} /> */}
         </>
     );
 };
@@ -258,8 +258,8 @@ const PinModal4 = ({ show, handleClose }: any) => {
                     </div>
                 </Modal.Body>
             </Modal>
-            <ProductModal show={showw} handleClose={handleModelClose} />
-            <AddToCardModal cardShow={cardShow} handleAddToCardModalClose={handleAddToCardModalClose} />
+            {/* <ProductModal show={showw} handleClose={handleModelClose} />
+            <AddToCardModal cardShow={cardShow} handleAddToCardModalClose={handleAddToCardModalClose} /> */}
         </>
     );
 };
@@ -319,8 +319,8 @@ const PinModal5 = ({ show, handleClose }: any) => {
                     </div>
                 </Modal.Body>
             </Modal>
-            <ProductModal show={showw} handleClose={handleModelClose} />
-            <AddToCardModal cardShow={cardShow} handleAddToCardModalClose={handleAddToCardModalClose} />
+            {/* <ProductModal show={showw} handleClose={handleModelClose} />
+            <AddToCardModal cardShow={cardShow} handleAddToCardModalClose={handleAddToCardModalClose} /> */}
         </>
     );
 };
@@ -380,8 +380,8 @@ const PinModal6 = ({ show, handleClose }: any) => {
                     </div>
                 </Modal.Body>
             </Modal>
-            <ProductModal show={showw} handleClose={handleModelClose} />
-            <AddToCardModal cardShow={cardShow} handleAddToCardModalClose={handleAddToCardModalClose} />
+            {/* <ProductModal show={showw} handleClose={handleModelClose} />
+            <AddToCardModal cardShow={cardShow} handleAddToCardModalClose={handleAddToCardModalClose} /> */}
         </>
     );
 

@@ -687,7 +687,7 @@ const HeaderHomeFashion = () => {
             <div className="backdrop-shadow d-none"></div>
             <MobileHeaderSearchModel show={show} handleClose={handleeSearchClose} />
             <LoginModal loginShow={loginShow} handleLoginClose={handleLoginClose} />
-            <ShoppingCardModal shoppingShow={shoppingShow} handleShoppingClose={handleShoppingClose} />
+            {/* <ShoppingCardModal shoppingShow={shoppingShow} handleShoppingClose={handleShoppingClose} /> */}
 
             <MobileHeader headerShow={headerShow}
                 handleHeaderClose={handleHeaderClose}

@@ -519,7 +519,7 @@ const ProductStoreHeader = () => {
                     </div>
                 </nav>
             </div >
-            <ShoppingCardModal shoppingShow={shoppingShow} handleShoppingClose={handleShoppingClose} />
+            {/* <ShoppingCardModal shoppingShow={shoppingShow} handleShoppingClose={handleShoppingClose} /> */}
             <MobileHeaderSearchModel show={show} handleClose={handleClose} />
         </React.Fragment >
     )

@@ -127,7 +127,7 @@ const FollowInstagram = () => {
                 </Container>
             </section>
 
-            <ProductModal show={show} handleClose={handleClose} />
+            {/* <ProductModal show={show} handleClose={handleClose} /> */}
         </React.Fragment>
     )
 }

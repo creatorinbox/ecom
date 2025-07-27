@@ -8,7 +8,7 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation } from 'swiper/modules'
 import { ProductDetail2, ProductFeatures2, ShopFeatures2, ShopPage2 } from '@src/common/Header/header2'
 import LoginModal from '@src/components/Headers/LoginModal'
-import ShoppingCardModal from '@src/commonsections/ShoppingCardModal'
+// import ShoppingCardModal from '@src/commonsections/ShoppingCardModal'
 import MobileHeader from '@src/components/Headers/MobileHeader'
 import SearchModal2 from '@src/components/SearchModal2'
 import MainModel from '@src/commonsections/MainModel'
@@ -612,7 +612,7 @@ const Header2 = () => {
             <div className="backdrop-shadow d-none"></div>
             <SearchModal2 show={searchShow} handleClose={handleClose} />
             <LoginModal loginShow={loginShow} handleLoginClose={handleLoginClose} />
-            <ShoppingCardModal shoppingShow={shoppingShow} handleShoppingClose={handleShoppingClose} />
+            {/* <ShoppingCardModal shoppingShow={shoppingShow} handleShoppingClose={handleShoppingClose} /> */}
             <MobileHeader headerShow={headerShow}
                 handleHeaderClose={handleHeaderClose}
                 loginShow={loginShow}

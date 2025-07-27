@@ -693,8 +693,8 @@ const OurProduct2 = () => {
                     </div>
                 </Container>
             </section>
-            <ProductModal show={show} handleClose={handleClose} />
-            <AddToCardModal cardShow={cardShow} handleAddToCardModalClose={handleAddToCardModalClose} />
+            {/* <ProductModal show={show} handleClose={handleClose} /> */}
+            {/* <AddToCardModal cardShow={cardShow} handleAddToCardModalClose={handleAddToCardModalClose} /> */}
         </React.Fragment>
     )
 }

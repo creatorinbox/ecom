@@ -51,22 +51,42 @@ type Product = {
   heightCm: string;
   categories: CategoryRelation[];
   tags: TagRelation[];
-  attributes: ProductAttribute[];
+  attributes?: ProductAttribute[];
 };
-const ProductModal = ({ show, handleClose,product }: any) => {
+type Props = {
+  show: boolean;
+  handleClose: () => void;
+  product: Product | null; // 👈 allow null
+};
+const ProductModal = ({ show, handleClose,product }: Props) => {
+      if (!product) return null;
+
     const [selectedColor, setSelectedColor] = useState('Pink');
     const [size, setSize] = useState("XS")
     const [quantity, setQuantity] = useState(1);
-const categoryNames = product?.categories?.map(c => c.category.name);
-const tagNames = product?.tags?.map(t => t.tag.name);
-const colorOptions = product?.attributes
-  ?.filter(attr => attr.attributeValue?.attribute?.name?.toLowerCase() === "color")
-  ?.map(attr => attr.attributeValue.value);
+const categoryNames = Array.isArray(product?.categories)
+  ? product.categories.map((c) => c.category.name)
+  : [];
 
-const sizeOptions = product?.attributes
-  ?.filter(attr => attr.attributeValue?.attribute?.name?.toLowerCase() === "size")
-  ?.map(attr => attr.attributeValue.value);
+const tagNames = Array.isArray(product?.tags)
+  ? product.tags.map((t) => t.tag.name)
+  : [];
 
+const colorOptions = Array.isArray(product?.attributes)
+  ? product.attributes
+      .filter((attr: ProductAttribute) =>
+        attr?.attributeValue?.attribute?.name?.toLowerCase() === "color"
+      )
+      .map((attr) => attr.attributeValue.value)
+  : [];
+
+const sizeOptions = Array.isArray(product?.attributes)
+  ? product.attributes
+      .filter((attr: ProductAttribute) =>
+        attr?.attributeValue?.attribute?.name?.toLowerCase() === "size"
+      )
+      .map((attr) => attr.attributeValue.value)
+  : [];
 
 
 // Inside your ProductModal component
@@ -319,24 +339,27 @@ useEffect(() => {
                                     <p className="text-muted mb-1"><span className="text-body">SKU:</span> {product?.sku}</p>
                                    <p className="text-muted mb-1">
   <span className="text-body">Categories:</span>{" "}
-  {categoryNames?.length > 0
-    ? categoryNames.map((cat, idx) => (
-        <Link key={idx} href={`/category/${encodeURIComponent(cat)}`} className="main_link text-muted">
-          {cat}
-        </Link>
-      )).reduce((prev, curr) => [prev, ", ", curr])
-    : <span className="text-muted">No categories</span>}
+ {categoryNames.map((cat, idx) => (
+  <React.Fragment key={idx}>
+    {idx > 0 && ", "}
+    <Link href={`/category/${encodeURIComponent(cat)}`} className="main_link text-muted">
+      {cat}
+    </Link>
+  </React.Fragment>
+))}
+
 </p>
 
 <p className="text-muted mb-1">
   <span className="text-body">Tags:</span>{" "}
-  {tagNames?.length > 0
-    ? tagNames.map((tag, idx) => (
-        <Link key={idx} href={`/tag/${encodeURIComponent(tag)}`} className="main_link text-muted">
-          {tag}
-        </Link>
-      )).reduce((prev, curr) => [prev, ", ", curr])
-    : <span className="text-muted">No tags</span>}
+ {tagNames.map((tag, idx) => (
+  <React.Fragment key={idx}>
+    {idx > 0 && ", "}
+    <Link href={`/tag/${encodeURIComponent(tag)}`} className="main_link text-muted">
+      {tag}
+    </Link>
+  </React.Fragment>
+))}
 </p>
 
 

@@ -837,8 +837,8 @@ const TrendingCard = () => {
                         <Button className="btn-load btn btn-custom-dark fw-semibold min-w-150 rounded-pill">Load More</Button>
                     </div>
                 </Container>
-                <ProductModal show={show} handleClose={handleClose} />
-                <AddToCardModal cardShow={cardShow} handleAddToCardModalClose={handleAddToCardModalClose} />
+                {/* <ProductModal show={show} handleClose={handleClose} />
+                <AddToCardModal cardShow={cardShow} handleAddToCardModalClose={handleAddToCardModalClose} /> */}
             </section>
         </React.Fragment>
     )

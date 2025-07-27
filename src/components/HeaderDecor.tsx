@@ -126,8 +126,8 @@ const SwiperCard = ({ product }: any) => {
                 </div>
             </div>
 
-            <ProductModal show={show} handleClose={handleClose} />
-            <AddToCardModal cardShow={cardShow} handleAddToCardModalClose={handleAddToCardModalClose} />
+            {/* <ProductModal show={show} handleClose={handleClose} />
+            <AddToCardModal cardShow={cardShow} handleAddToCardModalClose={handleAddToCardModalClose} /> */}
         </>
     );
 };
@@ -497,7 +497,7 @@ const HeaderDecor = () => {
             <div className="backdrop-shadow d-none"></div>
             <MobileHeaderSearchModel show={show} handleClose={handleSearchClose} />
             <LoginModal loginShow={loginShow} handleLoginClose={handleLoginClose} />
-            <ShoppingCardModal shoppingShow={shoppingShow} handleShoppingClose={handleShoppingClose} />
+            {/* <ShoppingCardModal shoppingShow={shoppingShow} handleShoppingClose={handleShoppingClose} /> */}
 
             <MobileHeader headerShow={headerShow}
                 handleHeaderClose={handleHeaderClose}

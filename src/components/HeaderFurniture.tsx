@@ -124,8 +124,8 @@ const SwiperCard = ({ item }: any) => {
                     </p>
                 </div>
             </div>
-            <ProductModal show={show} handleClose={handleClose} />
-            <AddToCardModal cardShow={cardShow} handleAddToCardModalClose={handleAddToCardModalClose} />
+            {/* <ProductModal show={show} handleClose={handleClose} />
+            <AddToCardModal cardShow={cardShow} handleAddToCardModalClose={handleAddToCardModalClose} /> */}
         </React.Fragment>
     )
 }
@@ -572,7 +572,7 @@ const HeaderFurniture = () => {
                 <div className="backdrop-shadow d-none"></div>
                 <SearchModal show={searchShow} handleClose={handleClose} />
                 <LoginModal loginShow={loginShow} handleLoginClose={handleLoginClose} />
-                <ShoppingCardModal shoppingShow={shoppingShow} handleShoppingClose={handleShoppingClose} />
+                {/* <ShoppingCardModal shoppingShow={shoppingShow} handleShoppingClose={handleShoppingClose} /> */}
 
                 <MobileHeader headerShow={headerShow}
                     handleHeaderClose={handleHeaderClose}

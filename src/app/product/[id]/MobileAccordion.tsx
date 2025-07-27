@@ -18,19 +18,46 @@ import icondown from '@assets/images/single-product/icon-down.svg'
 interface ProductImage {
   url: string;
 }
+interface TagRelation {
+  tag: { name: string };
+}
+interface CategoryRelation {
+  category: { name: string };
+}
+interface AttributeValue {
+  value: string;
+  attribute: {
+    name: string;
+  };
+}
+interface ProductAttribute {
+  attributeValue: AttributeValue;
+}
 
 interface Product {
   id: number;
   name: string;
+  imageUrl: string;
+  hoverImage: string;
   regularPrice?: number | null;
   salePrice: number;
   badge?: string | null;
-  imageUrl: string;
-  hoverImage: string;
-  description?: string;
   images?: ProductImage[];
+  sku: string;
+  tags: TagRelation[];
+  categories: CategoryRelation[];
+  shortDescription: string;
+  description: string;
+  weightKg: string;
+  lengthCm: string;
+  widthCm: string;
+  heightCm: string;
+  attributes?: ProductAttribute[];
 }
-const MobileAccordion = ({ product }:any) => {
+type Props = {
+  product: Product;
+};
+const MobileAccordion = ({ product }:Props) => {
 const imagesToShow =
   Array.isArray(product?.images) && product.images.length > 0
     ? product.images.map((img) => img.url)

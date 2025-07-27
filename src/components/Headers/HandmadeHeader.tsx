@@ -554,10 +554,10 @@ const HandmadeHeader = () => {
                 </nav>
             </div>
             <LoginModal loginShow={loginShow} handleLoginClose={handleLoginClose} />
-            <ShoppingCardModal shoppingShow={shoppingShow} handleShoppingClose={handleShoppingClose} />
+           {/* <ShoppingCardModal shoppingShow={shoppingShow} handleShoppingClose={handleShoppingClose} />*/}
             <MobileHeaderSearchModel show={show} handleClose={handleClose} />
-            <ProductModal show={quickshow} handleClose={handleQulickClose} />
-            <AddToCardModal cardShow={cardShow} handleAddToCardModalClose={handleAddToCardModalClose} />
+           {/*  <ProductModal show={quickshow} handleClose={handleQulickClose} />
+            <AddToCardModal cardShow={cardShow} handleAddToCardModalClose={handleAddToCardModalClose} />*/}
         </React.Fragment>
     )
 }

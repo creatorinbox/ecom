@@ -95,8 +95,8 @@ const HeaderCard = ({ product }: String | any) => {
                 </div>
             </div>
 
-            <ProductModal show={show} handleClose={handleClose} />
-            <AddToCardModal cardShow={cardShow} handleAddToCardModalClose={handleAddToCardModalClose} />
+            {/* <ProductModal show={show} handleClose={handleClose} />
+            <AddToCardModal cardShow={cardShow} handleAddToCardModalClose={handleAddToCardModalClose} /> */}
         </>
     )
 }
@@ -518,7 +518,7 @@ const HeaderShoes = () => {
             <div className="backdrop-shadow d-none"></div>
             <MobileHeaderSearchModel show={show} handleClose={handleSearcClose} />
             <LoginModal loginShow={loginShow} handleLoginClose={handleLoginClose} />
-            <ShoppingCardModal shoppingShow={shoppingShow} handleShoppingClose={handleShoppingClose} />
+            {/* <ShoppingCardModal shoppingShow={shoppingShow} handleShoppingClose={handleShoppingClose} /> */}
 
             <MobileHeader headerShow={headerShow}
                 handleHeaderClose={handleHeaderClose}

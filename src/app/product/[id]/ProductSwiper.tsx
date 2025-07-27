@@ -14,39 +14,51 @@ import 'swiper/css/navigation';
 import "swiper/css/free-mode";
 import "swiper/css/thumbs";
 import Link from "next/link";
+interface ProductImage {
+  url: string;
+}
 interface TagRelation {
   tag: { name: string };
 }
-
 interface CategoryRelation {
   category: { name: string };
 }
-
-interface AttributeValueRelation {
+interface AttributeValue {
   value: string;
-  attribute: { name: string };
+  attribute: {
+    name: string;
+  };
 }
-
 interface ProductAttribute {
-  attributeValue: AttributeValueRelation;
+  attributeValue: AttributeValue;
 }
 
 interface Product {
   id: number;
   name: string;
+  imageUrl: string;
+  hoverImage: string;
   regularPrice?: number | null;
   salePrice: number;
   badge?: string | null;
-  imageUrl: string;
-  hoverImage: string;
-  description?: string;
   images?: ProductImage[];
-  tags?: TagRelation[];
-  categories?: CategoryRelation[];
+  sku: string;
+  tags: TagRelation[];
+  categories: CategoryRelation[];
+  shortDescription: string;
+  description: string;
+  weightKg: string;
+  lengthCm: string;
+  widthCm: string;
+  heightCm: string;
   attributes?: ProductAttribute[];
 }
+type Props = {
+  product: Product;
+  handleShoppingShow: () => void;
+};
 
-const ProductSwiper = ({ handleShoppingShow,product }: any) => {
+const ProductSwiper = ({ handleShoppingShow,product }: Props) => {
 const { addToCart } = useCart();
     const isMobile = useMediaQuery({ maxWidth: 1025 });
     const [thumbsSwiper, sethumbsSwiper] = useState<any>(null)
@@ -83,7 +95,7 @@ const handleAddToCart =  async () => {
         productId: product.id,
         name: product.name,
         price: product.salePrice,
-        quantity: product.quantity,
+quantity,
         image: product?.images?.[0]?.url || product.imageUrl || "",
         color,
         size,
@@ -216,8 +228,7 @@ const handleAddToCart =  async () => {
                             </div>
 
                             <p className="text-muted mb-3">
-                                Go kalles this summer with this vintage navy and white striped v-neck t-shirt from the Nike.
-                                Perfect for pairing with denim and white kicks for a stylish kalles vibe.
+                               {product?.shortDescription}
                             </p>
 
                             <div>

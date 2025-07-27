@@ -9,7 +9,7 @@ import ProductSwiper from "./ProductSwiper";
 import MobileAccordion from "./MobileAccordion";
 
 import BreadCrumb from "@src/commonsections/BreadCrumb";
-import ViewedProduct from "@src/commonsections/ViewedProducts";
+//import ViewedProduct from "@src/commonsections/ViewedProducts";
 import LikeProducts from "@src/commonsections/LikeProducts";
 import FooterPage from "@src/components/Footer";
 import BottomProduct from "@src/commonsections/Bottomproduct";
@@ -20,11 +20,49 @@ import ShoppingCardModal from "@src/commonsections/ShoppingCardModal";
 import HeadTitle from "@src/commonsections/HeadTitle";
 
 import des2 from "@assets/images/single-product/des-02.jpg";
+interface ProductImage {
+  url: string;
+}
+interface TagRelation {
+  tag: { name: string };
+}
+interface CategoryRelation {
+  category: { name: string };
+}
+interface AttributeValue {
+  value: string;
+  attribute: {
+    name: string;
+  };
+}
+interface ProductAttribute {
+  attributeValue: AttributeValue;
+}
 
+interface Product {
+  id: number;
+  name: string;
+  imageUrl: string;
+  hoverImage: string;
+  regularPrice?: number | null;
+  salePrice: number;
+  badge?: string | null;
+  images?: ProductImage[];
+  sku: string;
+  tags: TagRelation[];
+  categories: CategoryRelation[];
+  shortDescription: string;
+  description: string;
+  weightKg: string;
+  lengthCm: string;
+  widthCm: string;
+  heightCm: string;
+  attributes?: ProductAttribute[];
+}
 export default function ProductDetailsPage() {
   const { id } = useParams();
   const [shoppingShow, setShoppingShow] = useState(false);
-  const [product, setProduct] = useState<any>(null);
+  const [product, setProduct] = useState<Product | null>(null);
 
   const handleShoppingClose = () => setShoppingShow(false);
   const handleShoppingShow = () => setShoppingShow(true);
@@ -43,7 +81,9 @@ export default function ProductDetailsPage() {
 
     if (id) fetchProduct();
   }, [id]);
-
+const formattedAttributes = product?.attributes
+  ?.map(attr => `${attr.attributeValue.attribute.name}: ${attr.attributeValue.value}`)
+  .join(", ") || "Grey / S";
   if (!product) return <div className="p-10 text-center text-gray-500">Loading product...</div>;
 
   return (
@@ -52,7 +92,7 @@ export default function ProductDetailsPage() {
       <TopBanner />
       <Header />
 
-      <BreadCrumb title={product?.category || "Product"} subTitle={product.name} />
+      <BreadCrumb title={product?.name || "Product"} subTitle={product.name} />
 
       {/* ✅ Pass product to dynamic components */}
       <ProductSwiper handleShoppingShow={handleShoppingShow} product={product} />
@@ -85,14 +125,15 @@ export default function ProductDetailsPage() {
       <FooterPage />
       <PopupPage />
 
-      <BottomProduct
-        img={des2}
-        colorSize={product.colorSize || "Grey / S"}
-        name={product.name}
-        colorSize2={product.colorSize || "Grey / S"}
-        price={`$${product.price}`}
-        handleShoppingShow={handleShoppingShow}
-      />
+<BottomProduct
+  img={product.imageUrl}
+  colorSize={formattedAttributes}
+  name={product.name}
+  colorSize2={formattedAttributes}
+  price={`${product.salePrice}`}
+  handleShoppingShow={handleShoppingShow}
+/>
+
       <ShoppingCardModal
         shoppingShow={shoppingShow}
         handleShoppingClose={handleShoppingClose}

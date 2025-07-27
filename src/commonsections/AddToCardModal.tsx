@@ -43,8 +43,12 @@ interface Product {
   heightCm: string;
   attributes?: ProductAttribute[];
 }
-
-const AddToCardModal = ({ cardShow, handleAddToCardModalClose, product }: { cardShow: boolean, handleAddToCardModalClose: () => void, product: Product }) => {
+type Props = {
+  cardShow: boolean;
+  handleAddToCardModalClose: () => void;
+  product: Product | null; // 👈 allow null
+};
+const AddToCardModal = ({ cardShow, handleAddToCardModalClose, product }: Props) => {
     if (!product) return null;
     const [color, setColor] = useState<string>("");
   const [size, setSize] = useState<string>("");

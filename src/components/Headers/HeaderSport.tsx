@@ -533,16 +533,16 @@ const HeaderSport = () => {
             <div className="backdrop-shadow d-none"></div>
             <MobileHeaderSearchModel show={show} handleClose={handleClose} />
             <LoginModal loginShow={loginShow} handleLoginClose={handleLoginClose} />
-            <ShoppingCardModal shoppingShow={shoppingShow} handleShoppingClose={handleShoppingClose} />
+            {/* <ShoppingCardModal shoppingShow={shoppingShow} handleShoppingClose={handleShoppingClose} /> */}
 
             <MobileHeader headerShow={headerShow}
                 handleHeaderClose={handleHeaderClose}
                 loginShow={loginShow}
                 handleLoginClose={handleLoginClose}
                 handleLoginShow={handleLoginShow} />
-
+{/* 
             <ProductModal show={OuickShow} handleClose={handleOuickClose} />
-            <AddToCardModal cardShow={cardShow} handleAddToCardModalClose={handleAddToCardModalClose} />
+            <AddToCardModal cardShow={cardShow} handleAddToCardModalClose={handleAddToCardModalClose} /> */}
 
         </React.Fragment >
     )

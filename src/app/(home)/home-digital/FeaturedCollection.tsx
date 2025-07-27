@@ -5,35 +5,27 @@ import Image from "next/image";
 import Link from "next/link";
 import ProductModal from "@src/commonsections/ProductModal";
 import AddToCardModal from "@src/commonsections/AddToCardModal";
-import { Product } from "@src/common/Header/mobileHeader";
+
 interface ProductImage {
   url: string;
 }
-
-interface CategoryRelation {
-  category: {
-    name: string;
-  };
-}
-
 interface TagRelation {
-  tag: {
-    name: string;
-  };
+  tag: { name: string };
 }
-
-interface AttributeValueRelation {
+interface CategoryRelation {
+  category: { name: string };
+}
+interface AttributeValue {
   value: string;
   attribute: {
     name: string;
   };
 }
-
 interface ProductAttribute {
-  attributeValue: AttributeValueRelation;
+  attributeValue: AttributeValue;
 }
 
-type Product = {
+interface Product {
   id: number;
   name: string;
   imageUrl: string;
@@ -43,16 +35,17 @@ type Product = {
   badge?: string | null;
   images?: ProductImage[];
   sku: string;
+  tags: TagRelation[];
+  categories: CategoryRelation[];
   shortDescription: string;
   description: string;
   weightKg: string;
   lengthCm: string;
   widthCm: string;
   heightCm: string;
-  categories: CategoryRelation[];
-  tags: TagRelation[];
-  attributes: ProductAttribute[];
-};
+  attributes?: ProductAttribute[];
+}
+
 
 const FeaturedCard = ({ item }: { item: Product }) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -73,7 +66,7 @@ const FeaturedCard = ({ item }: { item: Product }) => {
             </span>
           )}
           <Image
-            src={isHovered ? item.imageUrl : item.imageUrl}
+            src={isHovered ? item.hoverImage : item.imageUrl}
             alt={item.name}
             width={300}
             height={300}
@@ -108,10 +101,11 @@ const FeaturedCard = ({ item }: { item: Product }) => {
           </p>
         </div>
       </div>
-      <ProductModal show={show} handleClose={() => setShow(false)} product={item}  />
+      <ProductModal show={show} handleClose={() => setShow(false)}   product={item}/>
       <AddToCardModal
         cardShow={cardShow}
-        handleAddToCardModalClose={() => setCardShow(false)} product={item}
+        product={item}
+        handleAddToCardModalClose={() => setCardShow(false)}
       />
     </div>
   );
