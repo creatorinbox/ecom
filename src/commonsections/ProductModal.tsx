@@ -52,6 +52,8 @@ type Product = {
   categories: CategoryRelation[];
   tags: TagRelation[];
   attributes?: ProductAttribute[];
+    URL?:string;
+
 };
 type Props = {
   show: boolean;
@@ -168,7 +170,7 @@ useEffect(() => {
                       <span className="new-label bg-danger text-white rounded-circle">{product.badge}</span>
                     )}
                     <Image
-                      src={url}
+                      src={`/downloads${url}`}
                       alt={`${product?.name}-${index}`}
                       width={500}
                       height={500}
@@ -205,7 +207,12 @@ useEffect(() => {
                                         </div>
                                     </Link>
                                 </div>
-                                <p className="text-muted">{product?.shortDescription}</p>
+                                <div
+  className="text-muted"
+  dangerouslySetInnerHTML={{ __html: product?.shortDescription || '' }}
+></div>
+
+                                {/* <p className="text-muted">{product?.shortDescription}</p> */}
 
                                 {/* <h6 className="text-uppercase mb-3">Color: <span>{selectedColor}</span></h6>
                                 <div className="product-color-list mt-2 gap-2 d-flex align-items-center">
@@ -414,8 +421,11 @@ useEffect(() => {
                                             </svg>
                                         </Link>
                                     </div>
-                                    <Link href={`/product/${product?.id}`}className="fw-medium detail_link ">View full details<i className="facl facl-right ms-1"></i></Link>
-                                </div>
+{product?.URL && (
+  <Link href={product.URL} className="fw-medium detail_link">
+    View full details<i className="facl facl-right ms-1"></i>
+  </Link>
+)}                                </div>
                             </div>
                         </Col>
                     </Row>

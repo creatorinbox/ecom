@@ -42,6 +42,7 @@ interface Product {
   widthCm: string;
   heightCm: string;
   attributes?: ProductAttribute[];
+  URL:string;
 }
 type Props = {
   cardShow: boolean;
@@ -98,7 +99,7 @@ const tagNames = Array.isArray(product?.tags)
         <Row>
           <div className="col-4">
             {imagesToShow.map((url, idx) => (
-              <Image key={idx} src={url} alt={`Product Image ${idx}`} width={300} height={300} className="img-fluid mb-2" />
+              <Image key={idx} src={`/downloads${url}`} alt={`Product Image ${idx}`} width={300} height={300} className="img-fluid mb-2" />
             ))}
           </div>
           <div className="col-8">
@@ -192,10 +193,12 @@ const tagNames = Array.isArray(product?.tags)
               <span className="text-body">Tags:</span>{" "}
               {tagNames.length > 0 ? tagNames.join(", ") : "None"}
             </p>
+{product?.URL && (
 
-            <Link href={`/product/${product?.id}`} className="btn fs-16 fw-semibold detail_link mt-3">
+            <Link href={product.URL} className="btn fs-16 fw-semibold detail_link mt-3">
               View full details <i className="facl facl-right ms-1"></i>
             </Link>
+            )} 
           </div>
         </Row>
       </Modal.Body>

@@ -46,6 +46,7 @@ interface Product {
   widthCm: string;
   heightCm: string;
   attributes?: ProductAttribute[];
+  URL:string;
 }
 type Props = {
   cardShow: boolean;
@@ -112,7 +113,7 @@ const LikeProducts = () => {
             <div className="topbar-product-card pb-3">
               <div className="position-relative overflow-hidden">
                 <Image
-                  src={product.imageUrl}
+                  src= {`/downloads${product.imageUrl}`}
                   alt={product.name}
                   className="img-fluid"
                   width={500}

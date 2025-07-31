@@ -53,6 +53,7 @@ type Product = {
   categories: CategoryRelation[];
   tags: TagRelation[];
   attributes?: ProductAttribute[];
+  URL:string;
 };
 type Props = {
   shoppingShow: boolean;

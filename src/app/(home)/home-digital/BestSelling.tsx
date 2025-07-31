@@ -44,6 +44,7 @@ interface Product {
   widthCm: string;
   heightCm: string;
   attributes?: ProductAttribute[];
+  URL:string;
 }
 
 
@@ -91,9 +92,7 @@ console.log('acive',product);
                   <div>
                                   <span>Best Selling</span>
 
-  <button onClick={() => handleQuickView(products[0])} className="mb-3">
-    🔍 Test Quick View (First Product)
-  </button></div>
+  </div>
 )}
               </h3>
             </div>
@@ -118,7 +117,7 @@ console.log('acive',product);
                       </span>
                     )}
                     <Image
-                      src={product.hoverImage || product.imageUrl}
+  src={ `/downloads${product.imageUrl}`}
                       alt={product.name}
                       width={300}
                       height={300}
@@ -162,10 +161,9 @@ console.log('acive',product);
 
                   {/* Product Info */}
                   <div className="mt-3">
-                                        <button onClick={() => handleQuickView(products[0])}>Test Quick View</button>
 
                     <h6 className="mb-1 fw-semibold fs-14">
-                      <Link href={`/product/${product.id}`} className="main_link_blue">
+                      <Link href={product.URL} className="main_link_blue">
                         {product.name}
                       </Link>
                     </h6>

@@ -325,7 +325,7 @@ function parseAttributeValues(input: unknown): string[] {
 
 async function main() {
   // 🧬 Load Excel file
-  const workbook = XLSX.readFile(path.resolve(__dirname, '../../ecom/public/Final-product-export-15-7-2025 (1).xlsx'));
+  const workbook = XLSX.readFile(path.resolve(__dirname, '../../ecom/public/ecommerceprod.xlsx'));
   const sheet = workbook.Sheets[workbook.SheetNames[0]];
   const products = XLSX.utils.sheet_to_json(sheet) as { [key: string]: any }[];
 
@@ -393,7 +393,10 @@ widthCm: item["Width (cm)"] ? parseFloat(item["Width (cm)"]) : null,
 heightCm: item["Height (cm)"] ? parseFloat(item["Height (cm)"]) : null,
 
 allowReviews: item["Allow customer reviews?"] === "true",
-
+rank_math_title : item["Meta_rank_math_title"] ,
+rank_math_description  : item["Meta_rank_math_description"],
+rank_math_focus_keyword  : item["Meta_rank_math_focus_keyword"] ,
+URL           : item["URL"],
         categories: {
           create: parseAttributeValues(item['Categories']?.replaceAll('>', ',')).map(name => ({
             category: {

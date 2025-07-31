@@ -56,6 +56,7 @@ interface Product {
   widthCm: string;
   heightCm: string;
   attributes?: ProductAttribute[];
+  URL:string;
 }
 type Props = {
   product: Product | null;

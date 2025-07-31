@@ -44,6 +44,8 @@ interface Product {
   widthCm: string;
   heightCm: string;
   attributes?: ProductAttribute[];
+        URL:string;
+
 }
 
 
@@ -66,7 +68,7 @@ const FeaturedCard = ({ item }: { item: Product }) => {
             </span>
           )}
           <Image
-            src={isHovered ? item.hoverImage : item.imageUrl}
+            src={isHovered ? item.hoverImage : `/downloads${item.imageUrl}`}
             alt={item.name}
             width={300}
             height={300}
@@ -91,7 +93,7 @@ const FeaturedCard = ({ item }: { item: Product }) => {
         </div>
         <div className="mt-3">
           <h6 className="mb-1 fw-semibold fs-14">
-            <Link href="/product-detail-layout-01" className="main_link_blue">
+            <Link href={item.URL} className="main_link_blue">
               {item.name}
             </Link>
           </h6>

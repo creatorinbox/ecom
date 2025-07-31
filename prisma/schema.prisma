@@ -20,7 +20,7 @@ model Product {
 
   visibility         String?
   shortDescription   String?
-  description        String?
+description String? @db.Text
   saleStartDate      DateTime?
   saleEndDate        DateTime?
   taxStatus          String?
@@ -60,6 +60,10 @@ model Product {
   crossSellsTarget   CrossSell[]       @relation("ProductCrossSellTarget")
   cartItems CartItem[] // 👈 defines the back-reference
     attributes       ProductAttribute[] // 👈 Add this
+rank_math_title      String?
+rank_math_description  String?
+rank_math_focus_keyword  String?
+URL           String?
 }
 
 model Category {
