@@ -99,7 +99,7 @@ const ProductCard = ({ product, handleShow, handleAddToCardModalShow }: { produc
     );
     
     //const imageToShow = isHovered && product.hoverImage ? `/download${product.hoverImage}` : `/download${product.imageUrl}`;
-    const imageToShow = isHovered && product.hoverImage ? `/download${product.hoverImage}` : `/download${product.imageUrl}`;
+    const imageToShow = isHovered && product.hoverImage ? `/downloads${product.hoverImage}` : `/downloads${product.imageUrl}`;
 
     return (
         <div

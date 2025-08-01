@@ -5,7 +5,7 @@ import { prisma } from "@src/lib/prisma";
 export async function GET() {
   try {
     const products = await prisma.product.findMany({
-      take: 10, // limit to 10
+      take: 40, // limit to 10
        include: {
         categories: {
           include: {
