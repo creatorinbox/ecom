@@ -7,7 +7,7 @@ import HeadTitle from "@src/commonsections/HeadTitle";
 import TopBanner from "@src/components/Headers/TopBanner";
 import Header from "@src/components/Headers/Header";
 import FooterPage from "@src/components/Footer";
-import PopupPage from "@src/components/Popup";
+//import PopupPage from "@src/components/Popup";
 import { useCart } from "@src/context/CartContext";
 import cartBanner from "@assets/images/shopping-cart/shopping-cart-head.jpg";
 import { useRouter } from "next/navigation";
@@ -239,7 +239,7 @@ const totalAmount = subtotal + shipping;
       </section>
 
       <FooterPage />
-      <PopupPage />
+      {/* <PopupPage /> */}
    {showThankYou && orderId && (
   <Modal show centered onHide={() => setShowThankYou(false)}>
     <Modal.Header closeButton>

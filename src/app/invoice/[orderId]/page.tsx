@@ -4,6 +4,10 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import Image from "next/image";
+import Link from 'next/link'
+
+//import Link from "next/link"; // 1. Import Link
+
 //import logo from "@assets/images/logo.png";
 
 const formatDate = (isoDate: string) => {
@@ -39,6 +43,14 @@ const InvoicePage = () => {
     return <p className="text-center py-5">Loading invoice...</p>;
 
   return (
+    <>
+      <style>{`
+        @media print {
+          .no-print {
+            display: none !important;
+          }
+        }
+      `}</style>
     <Container className="py-5 bg-white shadow border">
       <div className="d-flex justify-content-between align-items-center mb-4">
         <Image src="/assets/images/logo.png" alt="Logo" width={140} height={40} />
@@ -101,11 +113,19 @@ const InvoicePage = () => {
       </div>
 
       <div className="text-end mt-4">
-        <Button variant="success" className="rounded-pill px-4" onClick={() => window.print()}>
-          Download / Print Invoice
-        </Button>
+         <Link href="/"> Home
+                                   
+                                </Link>
+
+          {/* <Button as={Link} href="/" variant="secondary" className="rounded-pill px-4 me-2 no-print">
+            Back to Home
+          </Button> */}
+         <Button variant="success" className="rounded-pill px-4 no-print" onClick={() => window.print()}>
+            Download / Print Invoice
+          </Button>
       </div>
     </Container>
+    </>
   );
 };
 

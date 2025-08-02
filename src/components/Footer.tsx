@@ -41,7 +41,7 @@ const FooterPage = () => {
                             </button>
                             <div id="collapseOne" className={`accordion-collapse collapse ${open === 1 ? 'show' : ""}`} data-bs-parent="#accordionExample">
                                 <Link href="#!">
-                                    <Image src={kalles} alt="KallesImg" height="29" priority />
+                                    <Image src="/assets/images/logo.png" alt="KallesImg" height="29" priority />
                                 </Link>
 
                                 <div className="mt-4 pt-2">

@@ -68,7 +68,7 @@ const FeaturedCard = ({ item }: { item: Product }) => {
             </span>
           )}
           <Image
-            src={isHovered ? item.hoverImage : `/downloads${item.imageUrl}`}
+            src={isHovered ? `/downloads${item.imageUrl}` : `/downloads${item.imageUrl}`}
             alt={item.name}
             width={300}
             height={300}

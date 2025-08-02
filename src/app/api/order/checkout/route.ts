@@ -25,9 +25,9 @@ export async function POST(req: Request) {
         items: {
           create: data.items.map((item: any) => ({
             productId: item.id,
-            name: item.name,
-            price: item.price,
-            quantity: item.quantity,
+            name: item.product.name || 'undefined',
+            price: item.product.salePrice || 0,
+            quantity: item.quantity || 'undefined',
           })),
         },
       },

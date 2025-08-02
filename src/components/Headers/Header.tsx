@@ -6,7 +6,7 @@ import { Navigation } from "swiper/modules";
 import LoginModal from '@src/components/Headers/LoginModal';
 import SearchModal from '@src/components/Headers/SearchModal';
 import ShoppingCardModal from '@src/commonsections/ShoppingCardModal';
-import MainModel from '@src/commonsections/MainModel';
+// import MainModel from '@src/commonsections/MainModel';
 import MobileHeader from '@src/components/Headers/MobileHeader';
 
 import Image from 'next/image'
@@ -251,7 +251,7 @@ const Header = () => {
 
     return (
         <React.Fragment>
-            <MainModel />
+            {/* <MainModel /> */}
             <div id="kalles-section-header_top" className='demo' ref={headerRef}>
                 <div className="h__top d-flex align-items-center">
                     <Container fluid>

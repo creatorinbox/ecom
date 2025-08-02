@@ -14,11 +14,12 @@ import FooterPage from "@src/components/Footer";
 import BottomProduct from "@src/commonsections/Bottomproduct";
 import TopBanner from "@src/components/Headers/TopBanner";
 import Header from "@src/components/Headers/Header";
-import PopupPage from "@src/components/Popup";
+//import PopupPage from "@src/components/Popup";
 import ShoppingCardModal from "@src/commonsections/ShoppingCardModal";
 import HeadTitle from "@src/commonsections/HeadTitle";
 
 import des2 from "@assets/images/single-product/des-02.jpg";
+import LayoutHeader8 from '@src/components/Headers/LayoutHeader8'
 
 
 interface ProductImage {
@@ -94,7 +95,9 @@ export default function ProductDetailsContent({ slug }: { slug: string }) {
     <>
       <HeadTitle title={product.name || "Product Details"} />
       <TopBanner />
-      <Header />
+      {/* <Header /> */}
+                              <LayoutHeader8 />
+
       <BreadCrumb title={product.name} subTitle={product.name} />
 
       <ProductSwiper handleShoppingShow={handleShoppingShow} product={product} />
@@ -115,7 +118,7 @@ export default function ProductDetailsContent({ slug }: { slug: string }) {
       </section>
 
       <FooterPage />
-      <PopupPage />
+      {/* <PopupPage /> */}
       <BottomProduct
         img={product.imageUrl}
         colorSize={formattedAttributes}

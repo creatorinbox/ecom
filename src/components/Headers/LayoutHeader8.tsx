@@ -209,13 +209,14 @@ const LayoutHeader8 = () => {
                                 <rect y="14" width="30" height="1.5"></rect>
                             </svg>
                         </Link>
-                        <Link className="navbar-brand d-lg-none" href="#"><Image src={logo} alt="LogoImg" width="95" /></Link>
-
+<Link className="navbar-brand d-lg-none" href="#">
+  <Image src="/assets/images/logo.png" alt="LogoImg" width="295" height="35" />
+</Link>
                         <div className="collapse navbar-collapse w-100" id="navbarSupportedContent">
                             <div className="d-none d-lg-block w-100">
                                 <div className="row">
                                     <div className="col-3">
-                                        <Link className="navbar-brand" href="/index"><Image src={logo} alt="LogoImg" width="95" /></Link>
+                                        <Link className="navbar-brand" href="/index"> <Image src="/assets/images/logo.png" alt="LogoImg" width="295" height="35" /></Link>
                                     </div>
                                     <div className="col-6 mb-lg-3">
                                         <form action="#" method="get" className="electrict-input" role="search">

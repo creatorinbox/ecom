@@ -138,7 +138,7 @@ const handleDelete = async (id: number) => {
     <div className="p-20 border-top" key={item.id}>
       <div className="row">
         <div className="col-lg-5">
-          <img src={product.imageUrl} alt={product.name} className="img-fluid" />
+          <img src={`/downloads${product.imageUrl}`} alt={product.name} className="img-fluid" />
         </div>
         <div className="col-7">
           <h6 className="mb-1">

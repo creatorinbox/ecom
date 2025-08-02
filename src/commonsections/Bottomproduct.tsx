@@ -67,7 +67,7 @@ const BottomProduct = ({ img, colorSize, colorSize2, name, price, del, handleSho
                             <div className="d-flex align-items-center">
                                 <div><Image
   alt="ImgImg"
-  src={img}
+  src={`/downloads${img}`}
   width={65}
   height={75}
   style={{
@@ -79,7 +79,7 @@ const BottomProduct = ({ img, colorSize, colorSize2, name, price, del, handleSho
                                     {/* <Image alt="ImgImg" src={img} style={{ maxWidth: "65px", maxHeight: "75px", width: "auto", verticalAlign: "middle" }} /> */}
                                 </div>
                                 <div className="ms-2">
-                                    <h6 className="mb-1">Men pants</h6>
+                                    <h6 className="mb-1">{name}</h6>
                                     <Link href="#" className="text-teal text-decoration-underline fs-12 fw-semibold">{colorSize2}</Link>
                                 </div>
                             </div>

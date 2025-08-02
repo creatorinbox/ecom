@@ -42,7 +42,7 @@ const CartDetail = () => {
         <Row key={item.id} className="align-items-center py-3 border-bottom g-0">
           <Col md={6}>
             <div className="d-flex gap-3 align-items-center">
-              <Image src={item.product.imageUrl} alt="Product" width={80} height={80} />
+              <Image src={`/downloads${item.product.imageUrl}`} alt="Product" width={80} height={80} />
               <div>
                 <h6 className="fs-16 mb-2">{item.product.name}</h6>
               </div>
